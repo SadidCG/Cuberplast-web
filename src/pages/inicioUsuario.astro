@@ -1,0 +1,16 @@
+---
+import Navbar2 from "../components/navbar2.astro";
+import Titulo from "../components/titulo.astro";
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+---
+
+<Layout title="Inicio Usuario">
+    <Navbar2 />
+    <Titulo title="Bienvenido!!" />
+    <div class="links flex ml-64 mr-14 mt-9">
+        <Card imagen="public/img/Seguimientos.jpg" ref="./seguimientos"/>
+        <Card imagen="public/img/Localidad.png"  ref="./localidades"/>
+    </div>
+</Layout>
+

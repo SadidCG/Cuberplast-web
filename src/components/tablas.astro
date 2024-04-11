@@ -1,0 +1,99 @@
+---
+const {producto,direccion, destino, localidad, estado} = Astro.props;
+---
+
+<table class="table">
+    <thead>
+      <tr>
+        <th id="Pro" style="font-weight: 600; font-size: larger;">Producto</th>
+        <th id="Dir" style="font-weight: 600; font-size: larger;">Dirección</th>
+        <th id="Des" style="font-weight: 600; font-size: larger;">Destino</th>
+        <th id="Loc" style="font-weight: 600; font-size: larger;">Localidad</th>
+        <th id="Est" style="font-weight: 600; font-size: larger;">Estado</th>
+        <th style="font-weight: 600; font-size: larger;">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="Pro">{producto}</td>
+        <td id="Dir">{direccion}</td>
+        <td id="Des">{destino}</td>
+        <td id="Loc">{localidad}</td>
+        <td id="Est">{estado}</td>
+        <td>
+          <button class="btnEditar" >Ver detalles</button>
+          <button type="button" class="btnBorrar">Eliminar</button>
+        </td>
+      </tr>
+      
+      
+      
+    </tbody>
+  </table>
+
+
+
+
+  <style>
+table {
+  border-collapse: collapse;
+  font-size: 12px;
+  font-family: arial;
+  width: 80%;
+  margin-left: 250px;
+  margin-top: 30px;
+}
+
+table th {
+  text-align: left;
+  padding: 10px;
+  background: rgb(30 58 138);
+  color: #fff;
+
+}
+
+table tr:nth-child(odd) {
+  background: #cecece;
+
+}
+
+table td {
+  padding: 10px;
+}
+
+.btnEditar {
+  background: rgb(30 58 138);
+  color: #fff;
+  border: 1px solid rgb(30 58 138);
+  padding: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 200ms;
+}
+
+.btnEditar:hover {
+  border: 1px solidrgb(30 58 138);
+  color: rgb(30 58 138);
+  background-color: transparent;
+
+}
+
+.btnBorrar {
+    background: #ff191d;
+  color: #fff;
+  border: 1px solid #ff191d;
+  padding: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 200ms;
+}
+
+.btnBorrar:hover {
+    border: 1px solid#ff191d;
+  color: #ff191d;
+  background-color:transparent;
+
+}
+  </style>
