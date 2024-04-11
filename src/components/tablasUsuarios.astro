@@ -1,27 +1,27 @@
 ---
-const {producto,direccion, destino, localidad, estado} = Astro.props;
+const {nombre,usuario, rol, id } = Astro.props;
 ---
 
 <table class="table">
     <thead>
       <tr>
-        <th id="Pro" style="font-weight: 600; font-size: larger;">Producto</th>
-        <th id="Dir" style="font-weight: 600; font-size: larger;">Dirección</th>
-        <th id="Des" style="font-weight: 600; font-size: larger;">Destino</th>
-        <th id="Loc" style="font-weight: 600; font-size: larger;">Localidad</th>
-        <th id="Est" style="font-weight: 600; font-size: larger;">Estado</th>
+        <th id="Pro" style="font-weight: 600; font-size: larger;">Id</th>
+        <th id="Dir" style="font-weight: 600; font-size: larger;">Nombre</th>
+        <th id="Des" style="font-weight: 600; font-size: larger;">Usuario</th>
+        <th id="Loc" style="font-weight: 600; font-size: larger;">Rol</th>
+       
         <th style="font-weight: 600; font-size: larger;">Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td id="Pro">{producto}</td>
-        <td id="Dir">{direccion}</td>
-        <td id="Des">{destino}</td>
-        <td id="Loc">{localidad}</td>
-        <td id="Est">{estado}</td>
+        <td id="id">{id}</td>
+        <td id="Nom">{nombre}</td>
+        <td id="Usua">{usuario}</td>
+        <td id="Rol">{rol}</td>
+        
         <td>
-          <a class="btnEditar"  href="../VistasSecundarias/verDetalles">Ver detalles</a>
+          <a class="btnEditar" >Editar</a>
           <a type="button" class="btnBorrar">Eliminar</a>
         </td>
       </tr>
