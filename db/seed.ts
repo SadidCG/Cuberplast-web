@@ -1,4 +1,6 @@
-import { usuario } from 'astro:db';
+import { db, usuario } from 'astro:db';
+
+console.log(usuario);
 
 export default async function seedDatabase() {
   // Aquí puedes definir los datos que deseas insertar en tu base de datos
@@ -11,7 +13,7 @@ export default async function seedDatabase() {
   // Insertar los datos en la colección de usuarios
   try {
     for (const userData of usuarios) {
-      await usuario.insert(userData);
+      await db.insert(usuario);
     }
     console.log('Datos semilla insertados correctamente.');
   } catch (error) {

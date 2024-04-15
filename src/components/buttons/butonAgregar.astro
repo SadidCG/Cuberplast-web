@@ -1,10 +1,34 @@
 ---
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
-import { db,usuario } from 'astro:db';
+import { db, usuario } from 'astro:db';
 
+// Manejar la solicitud POST
+if (Astro.request.method === 'POST') {
+  try {
+    // Analizar los datos del formulario
+    const formData = await Astro.request.formData();
+    const nombres = formData.get('name');
+    const apellidos = formData.get('lastname');
+    const user = formData.get('user');
+    const contraseña = formData.get('password');
+    const rol = formData.get('role');
+
+    // Verificar que todos los campos del formulario estén presentes
+    if (nombres && apellidos && user && contraseña && rol) {
+      // Insertar los datos en la colección de usuarios
+      await usuario.insert({ name: nombres, lastname: apellidos, user: user, password: contraseña, role: rol });
+      console.log('Datos insertados correctamente.');
+    } else {
+      console.error('Faltan campos en el formulario.');
+    }
+  } catch (error) {
+    console.error('Error al procesar el formulario:', error);
+  }
+}
+
+// Renderizar la nueva lista de usuarios en cada solicitud
 const usuarios = await db.select().from(usuario);
-
 ---
 
 <!-- HTML -->
@@ -37,26 +61,26 @@ const usuarios = await db.select().from(usuario);
                 fill-rule="evenodd"></path></svg
         >
     </button>
-    <form id="myForm" class="Form">
+    <form id="myForm" class="Form" method="POST" enctype="multipart/form-data">
         <h1 class="titulo text-4xl">Crear usuario</h1>
         <div class="inputs">
-            <label  class="text-xl">Nombres:</label>
-            <input type="text" id="name"   class="text-lg" autofocus/>
+            <label class="text-xl">Nombres:</label>
+            <input type="text" id="name" class="text-lg" autofocus/>
         </div>
         <div class="inputs">
-            <label  class="text-xl">Apellidos:</label>
-            <input type="text" id="lastname"  class="text-lg" autofocus />
+            <label class="text-xl">Apellidos:</label>
+            <input type="text" id="lastname" class="text-lg" autofocus />
         </div>
         <div class="inputs">
-            <label  class="text-xl">Usuario:</label>
+            <label class="text-xl">Usuario:</label>
             <input type="text" id="user" class="text-lg" autofocus/>
         </div>
         <div class="inputs">
             <label for="password" class="text-xl">Contraseña:</label>
-            <input type="password" id="password"  class="text-lg" autofocus/>
+            <input type="password" id="password" class="text-lg" autofocus/>
         </div>
         <div class="inputs">
-            <label  class="text-xl">Rol:</label>
+            <label class="text-xl">Rol:</label>
             <select id="role" class="form-select text-lg"  >
                 <option selected>Seleccionar...</option>
                 <option>Administrador</option>
@@ -64,24 +88,11 @@ const usuarios = await db.select().from(usuario);
             </select>
         </div>
 
-       
-        <div class="flex  mt-8 ml-12">
+        <div class="flex mt-8 ml-12">
             <Buton1 value="Crear" id="crear" />
-            
         </div>
     </form>
-
 </dialog>
-
-
-
-
-
-
-
-
-
-
 
 <style>
     .Buton1 {
@@ -133,7 +144,6 @@ const usuarios = await db.select().from(usuario);
     .inputs input,
     .inputs select {
         flex: 1; /* El input y select toma el espacio restante */
-        /* Espacio entre la etiqueta y el input/select */
         border: 1px solid gray;
         border-radius: 5px;
         outline: none;
@@ -144,52 +154,46 @@ const usuarios = await db.select().from(usuario);
         border: 1px solid gray;
         border-radius: 5px;
         outline: none;
-        
         padding: 5px;
     }
 </style>
 
 <script>
     // TypeScript
-  // TypeScript
-  const openModalBtn: HTMLButtonElement | null = document.getElementById(
-    "openModalBtn",
-) as HTMLButtonElement;
-const myModal: HTMLDialogElement | null = document.getElementById(
-    "myModal",
-) as HTMLDialogElement;
-const myForm: HTMLFormElement | null = document.getElementById(
-    "myForm",
-) as HTMLFormElement;
-const closeButton: HTMLButtonElement | null = document.getElementById(
-    "close-dialog",
-) as HTMLButtonElement;
+    const openModalBtn: HTMLButtonElement | null = document.getElementById(
+        "openModalBtn",
+    ) as HTMLButtonElement;
+    const myModal: HTMLDialogElement | null = document.getElementById(
+        "myModal",
+    ) as HTMLDialogElement;
+    const myForm: HTMLFormElement | null = document.getElementById(
+        "myForm",
+    ) as HTMLFormElement;
+    const closeButton: HTMLButtonElement | null = document.getElementById(
+        "close-dialog",
+    ) as HTMLButtonElement;
 
-if (openModalBtn && myModal && myForm && closeButton) {
-    openModalBtn.addEventListener("click", () => {
-        myModal.showModal();
-    });
+    if (openModalBtn && myModal && myForm && closeButton) {
+        openModalBtn.addEventListener("click", () => {
+            myModal.showModal();
+        });
 
-    closeButton.addEventListener("click", () => {
-        myModal.close();
-    });
-
-    // Cerrar el modal cuando se hace clic fuera de él
-    myModal.addEventListener("click", (event) => {
-        if (event.target === myModal) {
+        closeButton.addEventListener("click", () => {
             myModal.close();
-        }
-    });
+        });
 
-    // Cerrar el modal cuando se presiona la tecla Esc
-    window.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && myModal.open) {
-            myModal.close();
-        }
-    });
-};
+        // Cerrar el modal cuando se hace clic fuera de él
+        myModal.addEventListener("click", (event) => {
+            if (event.target === myModal) {
+                myModal.close();
+            }
+        });
 
-
-
+        // Cerrar el modal cuando se presiona la tecla Esc
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && myModal.open) {
+                myModal.close();
+            }
+        });
+    }
 </script>
-<script src="./botonAgregar.js"></script>
