@@ -1,4 +1,6 @@
+
 const ctx = document.getElementById('myChart').getContext('2d');
+
 const data = {
   labels: ['RedAntonio Nariño', 'BlueBarrios Unidos',
    'Bosa', 'Chapinero', 'Ciudad Bolívar', 'Engativá','Fontibón','Kennedy',
@@ -27,3 +29,4 @@ const chart = new Chart(ctx, {
     }
   }
 });
+ 
