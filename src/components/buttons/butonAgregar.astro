@@ -1,34 +1,8 @@
 ---
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
-import { db, usuario } from 'astro:db';
 
-// Manejar la solicitud POST
-if (Astro.request.method === 'POST') {
-  try {
-    // Analizar los datos del formulario
-    const formData = await Astro.request.formData();
-    const nombres = formData.get('name');
-    const apellidos = formData.get('lastname');
-    const user = formData.get('user');
-    const contraseña = formData.get('password');
-    const rol = formData.get('role');
 
-    // Verificar que todos los campos del formulario estén presentes
-    if (nombres && apellidos && user && contraseña && rol) {
-      // Insertar los datos en la colección de usuarios
-      await usuario.insert({ name: nombres, lastname: apellidos, user: user, password: contraseña, role: rol });
-      console.log('Datos insertados correctamente.');
-    } else {
-      console.error('Faltan campos en el formulario.');
-    }
-  } catch (error) {
-    console.error('Error al procesar el formulario:', error);
-  }
-}
-
-// Renderizar la nueva lista de usuarios en cada solicitud
-const usuarios = await db.select().from(usuario);
 ---
 
 <!-- HTML -->
@@ -61,7 +35,7 @@ const usuarios = await db.select().from(usuario);
                 fill-rule="evenodd"></path></svg
         >
     </button>
-    <form id="myForm" class="Form" method="POST" enctype="multipart/form-data">
+    <form id="myForm" class="Form"  enctype="multipart/form-data">
         <h1 class="titulo text-4xl">Crear usuario</h1>
         <div class="inputs">
             <label class="text-xl">Nombres:</label>
@@ -197,3 +171,34 @@ const usuarios = await db.select().from(usuario);
         });
     }
 </script>
+<script>
+    const myForm: HTMLFormElement | null = document.getElementById("myForm") as HTMLFormElement;
+
+    if (myForm) {
+        myForm.addEventListener("submit", async (event) => {
+            event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+            const formData = new FormData(myForm); // Obtener los datos del formulario
+
+            try {
+                const response = await fetch('http://localhost:4321/src/pages/api/apiUsuario.js', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // Si la solicitud se completó con éxito, puedes mostrar un mensaje al usuario o hacer cualquier otra acción necesaria
+                  
+                    console.log("Datos guardados correctamente");
+                } else {
+                    // Si hay algún error en la respuesta de la API, puedes manejarlo aquí
+                    console.error("Error al guardar los datos:", response.statusText);
+                }
+            } catch (error) {
+                // Si hay algún error en la solicitud (por ejemplo, problema de red), puedes manejarlo aquí
+                console.error("Error de red:", error);
+            }
+        });
+    }
+</script>
+

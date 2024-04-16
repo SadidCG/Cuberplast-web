@@ -1,4 +1,4 @@
-import { db, usuario } from 'astro:db';
+import { db, usuario, } from 'astro:db';
 
 console.log(usuario);
 
@@ -12,7 +12,7 @@ export default async function seedDatabase() {
 
   // Insertar los datos en la colección de usuarios
   try {
-    for (const userData of usuarios) {
+    for (const formData of usuarios) {
       await db.insert(usuario);
     }
     console.log('Datos semilla insertados correctamente.');

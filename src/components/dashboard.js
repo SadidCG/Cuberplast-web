@@ -1,3 +1,4 @@
+import Chart from 'chart.js/auto'; // Importa el módulo Chart.js
 
 const ctx = document.getElementById('myChart').getContext('2d');
 
@@ -29,4 +30,3 @@ const chart = new Chart(ctx, {
     }
   }
 });
- 
