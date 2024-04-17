@@ -1,4 +1,4 @@
-import Chart from 'chart.js/auto'; // Importa el módulo Chart.js
+import Chart from 'chart.js/auto'; 
 
 const ctx = document.getElementById('myChart').getContext('2d');
 
@@ -9,7 +9,7 @@ const data = {
    'Teusaqullo','Tunjuelito','Usaquén','Usme'],
   datasets: [{
     label: 'Más ventas',
-    data: [12, 19, 39, 50, 25, 37,30, 50,70,17,80,45,56,67,43,78,96,56,67,43,],
+    data: [100, 19, 39, 50, 25, 37,30, 50,70,17,80,45,56,67,43,78,96,56,67,43,],
     backgroundColor: ['rgb(14, 210, 245, 0.4)'],
     borderColor: ['rgb(14, 210, 245)'],
     borderWidth: 1

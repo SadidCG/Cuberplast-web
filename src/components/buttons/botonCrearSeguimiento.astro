@@ -1,7 +1,6 @@
 ---
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
-
 ---
 
 <!-- HTML -->
@@ -10,74 +9,6 @@ import Buton1 from "./buton1.astro";
         <AgregarIcon />
     </button>
 </div>
-
-<dialog
-    id="myModal"
-    class="modal items-center justify-center bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
->
-    <button
-        type="button"
-        id="close-dialog"
-        class="close-dialog fixed right-1/4 top-20 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
-    >
-        <!--?xml version="1.0" ?-->
-        <svg
-            fill="none"
-            height="30"
-            viewBox="0 0 20 20"
-            width="30"
-            xmlns="http://www.w3.org/2000/svg"
-            ><path
-                clip-rule="evenodd"
-                d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z"
-                fill="#fff"
-                fill-rule="evenodd"></path></svg
-        >
-    </button>
-    <form id="myForm" class="Form">
-        <h1 class="titulo text-4xl">Crear usuario</h1>
-        <div class="inputs">
-            <label  class="text-xl">Nombre:</label>
-            <input type="text" id="name"   class="text-lg" autofocus/>
-        </div>
-        <div class="inputs">
-            <label  class="text-xl">Apellidos:</label>
-            <input type="text" id="lastname"  class="text-lg" autofocus />
-        </div>
-        <div class="inputs">
-            <label  class="text-xl">Usuario:</label>
-            <input type="text" id="user" class="text-lg" autofocus/>
-        </div>
-        <div class="inputs">
-            <label for="password" class="text-xl">Contraseña:</label>
-            <input type="password" id="password"  class="text-lg" autofocus/>
-        </div>
-        <div class="inputs">
-            <label  class="text-xl">Rol:</label>
-            <select id="role" class="form-select text-lg"  >
-                <option selected>Seleccionar...</option>
-                <option>Administrador</option>
-                <option>Usuario</option>
-            </select>
-        </div>
-
-       
-        <div class="flex  mt-8 ml-12">
-            <Buton1 value="Siguiente" id="Siguiente" />
-            
-        </div>
-    </form>
-
-</dialog>
-
-
-
-
-
-
-
-
-
 
 <dialog
     id="myModal2"
@@ -103,54 +34,52 @@ import Buton1 from "./buton1.astro";
         >
     </button>
     <form id="myForm2" class="Form">
-        <h1 class="titulo text-4xl">Crear usuario</h1>
+        <h1 class="titulo text-4xl">Crear Seguimiento</h1>
         <div class="inputs">
-            <label  class="text-xl">Nombre:</label>
-            <input type="text" id="hora1"   class="text-lg" autofocus/>
+            <label class="text-xl">Producto:</label>
+            <input type="text" id="hora1" class="text-lg" autofocus />
         </div>
         <div class="inputs">
-            <label  class="text-xl">Apellidos:</label>
-            <input type="text" id="hora2"  class="text-lg" autofocus />
+            <label class="text-xl">Dirección:</label>
+            <input type="text" id="hora2" class="text-lg" autofocus />
         </div>
         <div class="inputs">
-            <label  class="text-xl">Usuario:</label>
-            <input type="text" id="hora3" class="text-lg" autofocus/>
+            <label class="text-xl">Destino:</label>
+            <input type="text" id="hora3" class="text-lg" autofocus />
         </div>
         <div class="inputs">
             <label for="password" class="text-xl">Contraseña:</label>
-            <input type="password" id="hora4"  class="text-lg" autofocus/>
+            <input type="password" id="hora4" class="text-lg" autofocus />
         </div>
-        <div class="Select">
-            <label for="inputState" class="form-label" style="font-weight: 600;">Localidad</label>
-            <select id="inputState" class="form-select">
-              <option selected>Seleccionar...</option>
-              <option>Antonio Nariño</option>
-              <option>Barrios Unidos</option>
-              <option>Bosa</option>
-              <option>Chapinero</option>
-              <option>Ciudad Bolívar</option>
-              <option>Engativá</option>
-              <option>Fontibón</option>
-              <option>Kennedy</option>
-              <option>La Candelaria</option>
-              <option>Los Mártires</option>
-              <option>Puente Aranda</option>
-              <option>Rafael Uribe Uribe</option>
-              <option>San Cristobal</option>
-              <option>Santa Fe</option>
-              <option>Suba</option>
-              <option>Sumapaz</option>
-              <option>Teusaqullo</option>
-              <option>Tunjuelito</option>
-              <option>Usaquén</option>
-              <option>Usme</option>
+        <div class="inputs">
+            <label class="form-label text-xl">Localidad:</label>
+            <select id="localidad" class="form-select text-lg">
+                <option selected>Seleccionar...</option>
+                <option>Antonio Nariño</option>
+                <option>Barrios Unidos</option>
+                <option>Bosa</option>
+                <option>Chapinero</option>
+                <option>Ciudad Bolívar</option>
+                <option>Engativá</option>
+                <option>Fontibón</option>
+                <option>Kennedy</option>
+                <option>La Candelaria</option>
+                <option>Los Mártires</option>
+                <option>Puente Aranda</option>
+                <option>Rafael Uribe Uribe</option>
+                <option>San Cristobal</option>
+                <option>Santa Fe</option>
+                <option>Suba</option>
+                <option>Sumapaz</option>
+                <option>Teusaquillo</option>
+                <option>Tunjuelito</option>
+                <option>Usaquén</option>
+                <option>Usme</option>
             </select>
-          </div>
+        </div>
 
-       
-        <div class="flex  mt-8 ml-12">
+        <div class="flex mt-8 ml-12">
             <Buton1 value="Crear" id="crear" />
-            
         </div>
     </form>
 </dialog>
@@ -205,7 +134,6 @@ import Buton1 from "./buton1.astro";
     .inputs input,
     .inputs select {
         flex: 1; /* El input y select toma el espacio restante */
-        /* Espacio entre la etiqueta y el input/select */
         border: 1px solid gray;
         border-radius: 5px;
         outline: none;
@@ -216,38 +144,46 @@ import Buton1 from "./buton1.astro";
         border: 1px solid gray;
         border-radius: 5px;
         outline: none;
-        
         padding: 5px;
     }
 </style>
 
 <script>
     // TypeScript
-  // TypeScript
-const openModalBtn: HTMLButtonElement | null = document.getElementById(
-    "openModalBtn",
-) as HTMLButtonElement;
-const myModal: HTMLDialogElement | null = document.getElementById(
-    "myModal",
-) as HTMLDialogElement;
-const myForm: HTMLFormElement | null = document.getElementById(
-    "myForm",
-) as HTMLFormElement;
-const closeButton: HTMLButtonElement | null = document.getElementById(
-    "close-dialog",
-) as HTMLButtonElement;
+    const openModalBtn: HTMLButtonElement | null = document.getElementById(
+        "openModalBtn",
+    ) as HTMLButtonElement;
+    const myModal2: HTMLDialogElement | null = document.getElementById(
+        "myModal2",
+    ) as HTMLDialogElement;
+    const myForm2: HTMLFormElement | null = document.getElementById(
+        "myForm2",
+    ) as HTMLFormElement;
+    const closeButton: HTMLButtonElement | null = document.getElementById(
+        "close-dialog",
+    ) as HTMLButtonElement;
 
-if (openModalBtn && myModal && myForm && closeButton) {
-    openModalBtn.addEventListener("click", () => {
-        myModal.showModal();
-    });
+    if (openModalBtn && myModal2 && myForm2 && closeButton) {
+        openModalBtn.addEventListener("click", () => {
+            myModal2.showModal();
+        });
 
-    closeButton.addEventListener("click", () => {
-        myModal.close();
-    });
+        closeButton.addEventListener("click", () => {
+            myModal2.close();
+        });
 
-  
-}
+        // Cerrar el modal cuando se hace clic fuera de él
+        myModal2.addEventListener("click", (event) => {
+            if (event.target === myModal2) {
+                myModal2.close();
+            }
+        });
 
+        // Cerrar el modal cuando se presiona la tecla Esc
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && myModal2.open) {
+                myModal2.close();
+            }
+        });
+    }
 </script>
-<script src="./botonAgregar.js"></script>

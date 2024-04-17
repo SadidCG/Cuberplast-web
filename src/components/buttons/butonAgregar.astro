@@ -7,18 +7,18 @@ import Buton1 from "./buton1.astro";
 
 <!-- HTML -->
 <div class="container">
-    <button id="openModalBtn" class="btn size-12 bg-blue-900">
+    <button id="openModalBtn3" class="btn size-12 bg-blue-900">
         <AgregarIcon />
     </button>
 </div>
 
 <dialog
-    id="myModal"
+    id="myModal3"
     class="modal items-center justify-center bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
 >
     <button
         type="button"
-        id="close-dialog"
+        id="close-dialog3"
         class="close-dialog fixed right-1/4 top-20 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
     >
         <!--?xml version="1.0" ?-->
@@ -35,7 +35,7 @@ import Buton1 from "./buton1.astro";
                 fill-rule="evenodd"></path></svg
         >
     </button>
-    <form id="myForm" class="Form"  enctype="multipart/form-data">
+    <form id="myForm3" class="Form"  enctype="multipart/form-data">
         <h1 class="titulo text-4xl">Crear usuario</h1>
         <div class="inputs">
             <label class="text-xl">Nombres:</label>
@@ -135,16 +135,16 @@ import Buton1 from "./buton1.astro";
 <script>
     // TypeScript
     const openModalBtn: HTMLButtonElement | null = document.getElementById(
-        "openModalBtn",
+        "openModalBtn3",
     ) as HTMLButtonElement;
     const myModal: HTMLDialogElement | null = document.getElementById(
-        "myModal",
+        "myModal3",
     ) as HTMLDialogElement;
     const myForm: HTMLFormElement | null = document.getElementById(
-        "myForm",
+        "myForm3",
     ) as HTMLFormElement;
     const closeButton: HTMLButtonElement | null = document.getElementById(
-        "close-dialog",
+        "close-dialog3",
     ) as HTMLButtonElement;
 
     if (openModalBtn && myModal && myForm && closeButton) {
@@ -172,13 +172,13 @@ import Buton1 from "./buton1.astro";
     }
 </script>
 <script>
-    const myForm: HTMLFormElement | null = document.getElementById("myForm") as HTMLFormElement;
+    const myForm3: HTMLFormElement | null = document.getElementById("myForm3") as HTMLFormElement;
 
-    if (myForm) {
-        myForm.addEventListener("submit", async (event) => {
+    if (myForm3) {
+        myForm3.addEventListener("submit", async (event) => {
             event.preventDefault(); // Evitar que el formulario se envíe automáticamente
 
-            const formData = new FormData(myForm); // Obtener los datos del formulario
+            const formData = new FormData(myForm3); // Obtener los datos del formulario
 
             try {
                 const response = await fetch('http://localhost:4321/src/pages/api/apiUsuario.js', {
