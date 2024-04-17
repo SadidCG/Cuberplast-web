@@ -1,186 +1,273 @@
 ---
-const {uid,unombre, uapellidos, uusuario,urol} = Astro.props;
+const { uid, unombre, uapellidos, uusuario, urol } = Astro.props;
 import Butonborrcanc from "./buttons/botonesBorr-canc.astro";
 ---
 
 <table class="table">
-    <thead>
-      <tr>
-        <th id="usuarioId" style="font-weight: 600; font-size: larger;">Id</th>
-        <th id="nombre" style="font-weight: 600; font-size: larger;">Nombre</th>
-        <th id="apellidos" style="font-weight: 600; font-size: larger;">Apellidos</th>
-        <th id="usuario" style="font-weight: 600; font-size: larger;">Usuario</th>
-        <th id="rol" style="font-weight: 600; font-size: larger;">Rol</th>
-        <th style="font-weight: 600; font-size: larger;">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td id="Pro">{uid}</td>
-        <td id="Dir">{unombre}</td>
-        <td id="Des">{uapellidos}</td>
-        <td id="Loc">{uusuario}</td>
-        <td id="Est">{urol}</td>
-        <td>
-          <a class="btnEditar"  href="../VistasSecundarias/verDetalles">Ver detalles</a>
-          <button type="button" class="btnBorrar" id="openModalBtn">Eliminar</button>
-        </td>
-      </tr>
-      
-
-
-      
-      
-    </tbody>
-  </table>
-  <dialog
+  <thead>
+    <tr>
+      <th id="usuarioId" style="font-weight: 600; font-size: larger;">Id</th>
+      <th id="nombre" style="font-weight: 600; font-size: larger;">Nombre</th>
+      <th id="apellidos" style="font-weight: 600; font-size: larger;">Apellidos</th>
+      <th id="usuario" style="font-weight: 600; font-size: larger;">Usuario</th>
+      <th id="rol" style="font-weight: 600; font-size: larger;">Rol</th>
+      <th style="font-weight: 600; font-size: larger;">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="Pro">{uid}</td>
+      <td id="Dir">{unombre}</td>
+      <td id="Des">{uapellidos}</td>
+      <td id="Loc">{uusuario}</td>
+      <td id="Est">{urol}</td>
+      <td>
+        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
+          >Ver detalles</a
+        >
+        <button type="button" class="btnBorrar" id="openModalBtn"
+          >Eliminar</button
+        >
+      </td>
+    </tr>
+    <tr>
+      <td id="Pro">{uid}</td>
+      <td id="Dir">{unombre}</td>
+      <td id="Des">{uapellidos}</td>
+      <td id="Loc">{uusuario}</td>
+      <td id="Est">{urol}</td>
+      <td>
+        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
+          >Ver detalles</a
+        >
+        <button type="button" class="btnBorrar" id="openModalBtn"
+          >Eliminar</button
+        >
+      </td>
+    </tr>
+    <tr>
+      <td id="Pro">{uid}</td>
+      <td id="Dir">{unombre}</td>
+      <td id="Des">{uapellidos}</td>
+      <td id="Loc">{uusuario}</td>
+      <td id="Est">{urol}</td>
+      <td>
+        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
+          >Ver detalles</a
+        >
+        <button type="button" class="btnBorrar" id="openModalBtn"
+          >Eliminar</button
+        >
+      </td>
+    </tr>
+    <tr>
+      <td id="Pro">{uid}</td>
+      <td id="Dir">{unombre}</td>
+      <td id="Des">{uapellidos}</td>
+      <td id="Loc">{uusuario}</td>
+      <td id="Est">{urol}</td>
+      <td>
+        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
+          >Ver detalles</a
+        >
+        <button type="button" class="btnBorrar" id="openModalBtn"
+          >Eliminar</button
+        >
+      </td>
+    </tr>
+    <tr>
+      <td id="Pro">{uid}</td>
+      <td id="Dir">{unombre}</td>
+      <td id="Des">{uapellidos}</td>
+      <td id="Loc">{uusuario}</td>
+      <td id="Est">{urol}</td>
+      <td>
+        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
+          >Ver detalles</a
+        >
+        <button type="button" class="btnBorrar" id="openModalBtn"
+          >Eliminar</button
+        >
+      </td>
+    </tr>
+    <tr>
+      <td id="Pro">{uid}</td>
+      <td id="Dir">{unombre}</td>
+      <td id="Des">{uapellidos}</td>
+      <td id="Loc">{uusuario}</td>
+      <td id="Est">{urol}</td>
+      <td>
+        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
+          >Ver detalles</a
+        >
+        <button type="button" class="btnBorrar" id="openModalBtn"
+          >Eliminar</button
+        >
+      </td>
+    </tr>
+    <tr>
+      <td id="Pro">{uid}</td>
+      <td id="Dir">{unombre}</td>
+      <td id="Des">{uapellidos}</td>
+      <td id="Loc">{uusuario}</td>
+      <td id="Est">{urol}</td>
+      <td>
+        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
+          >Ver detalles</a
+        >
+        <button type="button" class="btnBorrar" id="openModalBtn"
+          >Eliminar</button
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>
+<dialog
   id="myModal"
   class="modal bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
 >
-<button
-        type="button"
-        id="close-dialog"
-        class="close-dialog fixed right-1/4 top-1/3 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
+  <button
+    type="button"
+    id="close-dialog"
+    class="close-dialog fixed right-1/4 top-1/3 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
+  >
+    <!--?xml version="1.0" ?-->
+    <svg
+      fill="none"
+      height="30"
+      viewBox="0 0 20 20"
+      width="30"
+      xmlns="http://www.w3.org/2000/svg"
+      ><path
+        clip-rule="evenodd"
+        d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z"
+        fill="#fff"
+        fill-rule="evenodd"></path></svg
     >
-        <!--?xml version="1.0" ?-->
-        <svg
-            fill="none"
-            height="30"
-            viewBox="0 0 20 20"
-            width="30"
-            xmlns="http://www.w3.org/2000/svg"
-            ><path
-                clip-rule="evenodd"
-                d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z"
-                fill="#fff"
-                fill-rule="evenodd"></path></svg
-        >
-    </button>
+  </button>
 
-  <form id="myForm" class="Form" >
-      <h2 class="titulo">¿Quieres eliminar a este usuario?</h2>
-      
-      <div class="flex mt-8 ml-28">
-        
-        <Butonborrcanc value="Borrar" id="borrar" value2="Cancelar" id="cancelar"/>
+  <form id="myForm" class="Form">
+    <h2 class="titulo">¿Quieres eliminar a este usuario?</h2>
+
+    <div class="flex mt-8 ml-28">
+      <Butonborrcanc
+        value="Borrar"
+        id="borrar"
+        value2="Cancelar"
+        id="cancelar"
+      />
     </div>
   </form>
 </dialog>
 
+<style>
+  .Form {
+    width: 560px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 30px;
+    background-color: rgb(255, 255, 255);
+  }
+  .titulo {
+    text-align: center;
+    margin-bottom: 10px;
+  }
 
+  table {
+    border-collapse: collapse;
+    font-size: 12px;
+    font-family: arial;
+    width: 80%;
+    margin-left: 250px;
+    margin-top: 30px;
+  }
 
-  <style>
-    .Form {
-        width: 560px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 15px;
-        padding: 30px;
-        background-color: rgb(255, 255, 255);
-    }
-    .titulo {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    
-table {
-  border-collapse: collapse;
-  font-size: 12px;
-  font-family: arial;
-  width: 80%;
-  margin-left: 250px;
-  margin-top: 30px;
-}
+  table th {
+    text-align: left;
+    padding: 10px;
+    background: rgb(30 58 138);
+    color: #fff;
+  }
 
-table th {
-  text-align: left;
-  padding: 10px;
-  background: rgb(30 58 138);
-  color: #fff;
+  table tr:nth-child(odd) {
+    background: #cecece;
+  }
 
-}
+  table td {
+    padding: 10px;
+  }
 
-table tr:nth-child(odd) {
-  background: #cecece;
+  .btnEditar {
+    background: rgb(30 58 138);
+    color: #fff;
+    border: 1px solid rgb(30 58 138);
+    padding: 6.9px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 200ms;
+  }
 
-}
+  .btnEditar:hover {
+    border: 1px solidrgb(30 58 138);
+    color: rgb(30 58 138);
+    background-color: transparent;
+  }
 
-table td {
-  padding: 10px;
-}
-
-.btnEditar {
-  background: rgb(30 58 138);
-  color: #fff;
-  border: 1px solid rgb(30 58 138);
-  padding: 6.9px;
-  border-radius: 3px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 200ms;
-}
-
-.btnEditar:hover {
-  border: 1px solidrgb(30 58 138);
-  color: rgb(30 58 138);
-  background-color: transparent;
-
-}
-
-.btnBorrar {
+  .btnBorrar {
     background: #ff191d;
-  color: #fff;
-  border: 1px solid #ff191d;
-  padding: 5px;
-  border-radius: 3px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 200ms;
-}
+    color: #fff;
+    border: 1px solid #ff191d;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 200ms;
+  }
 
-.btnBorrar:hover {
+  .btnBorrar:hover {
     border: 1px solid#ff191d;
-  color: #ff191d;
-  background-color:transparent;
+    color: #ff191d;
+    background-color: transparent;
+  }
+</style>
+<script>
+  // TypeScript
+  const openModalBtn: HTMLButtonElement | null = document.getElementById(
+    "openModalBtn",
+  ) as HTMLButtonElement;
+  const myModal: HTMLDialogElement | null = document.getElementById(
+    "myModal",
+  ) as HTMLDialogElement;
+  const myForm: HTMLFormElement | null = document.getElementById(
+    "myForm",
+  ) as HTMLFormElement;
+  const closeButton: HTMLButtonElement | null = document.getElementById(
+    "close-dialog",
+  ) as HTMLButtonElement;
 
-}
-  </style>
-  <script>
-    // TypeScript
-    const openModalBtn: HTMLButtonElement | null = document.getElementById(
-        "openModalBtn",
-    ) as HTMLButtonElement;
-    const myModal: HTMLDialogElement | null = document.getElementById(
-        "myModal",
-    ) as HTMLDialogElement;
-    const myForm: HTMLFormElement | null = document.getElementById(
-        "myForm",
-    ) as HTMLFormElement;
-    const closeButton: HTMLButtonElement | null = document.getElementById(
-        "close-dialog",
-    ) as HTMLButtonElement;
+  if (openModalBtn && myModal && myForm && closeButton) {
+    openModalBtn.addEventListener("click", () => {
+      myModal.showModal();
+    });
 
-    if (openModalBtn && myModal && myForm && closeButton) {
-        openModalBtn.addEventListener("click", () => {
-            myModal.showModal();
-        });
+    closeButton.addEventListener("click", () => {
+      myModal.close();
+    });
 
-        closeButton.addEventListener("click", () => {
-            myModal.close();
-        });
+    // Cerrar el modal cuando se hace clic fuera de él
+    myModal.addEventListener("click", (event) => {
+      if (event.target === myModal) {
+        myModal.close();
+      }
+    });
 
-        // Cerrar el modal cuando se hace clic fuera de él
-        myModal.addEventListener("click", (event) => {
-            if (event.target === myModal) {
-                myModal.close();
-            }
-        });
-
-        // Cerrar el modal cuando se presiona la tecla Esc
-        window.addEventListener("keydown", (event) => {
-            if (event.key === "Escape" && myModal.open) {
-                myModal.close();
-            }
-        });
-    }
+    // Cerrar el modal cuando se presiona la tecla Esc
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && myModal.open) {
+        myModal.close();
+      }
+    });
+  }
 </script>
