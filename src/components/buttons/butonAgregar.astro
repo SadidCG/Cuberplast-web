@@ -8,14 +8,16 @@ if (Astro.request.method == "POST"){
     const formData = await Astro.request.formData();
     const nombres = formData.get("nombres1");
     const apellidos = formData.get("apellidos1");
-    const usuario = formData.get("usuario1");
+    const usuario1 = formData.get("usuario1");
     const contraseña = formData.get("contraseña1");
     const rol = formData.get("rol1");
-    console.log(nombres, apellidos, usuario, contraseña,rol);
-    if(typeof nombres === 'string' && apellidos === 'string' && usuario === 'string' && contraseña === 'string' && rol === 'string'){
-        await db.insert(usuario).values({nombres, apellidos, usuario, contraseña, rol});
+   
+    if(typeof nombres === 'string' && apellidos === 'string' && usuario1 === 'string' && contraseña === 'string' && rol === 'number'){
+        await db.insert(usuario).values({nombres, apellidos, usuario1, contraseña, rol});
+        
 
     }
+    console.log(nombres, apellidos, usuario1, contraseña,rol);
 
     
 

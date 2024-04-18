@@ -1,4 +1,4 @@
-import { db, usuario, Roles } from 'astro:db';
+import { db, usuario, Roles, seguimientos, localidades } from 'astro:db';
 
 export default async function () {
 
@@ -37,6 +37,23 @@ export default async function () {
 
 
   ]);
+
+
+  await db.insert(seguimientos).values([{
+    nombre_producto: 'Producto 1',
+    nombre_empresa: 'Empresa 1',
+    destino: 'Destino 1',
+    direccion: 'calle 123 numero 122-21',
+    localidad_id: 1
+  
+
+  }]);
+
+  await db.insert(localidades).values([{
+    id:2,
+    nombre_localidad:'suba'
+
+  }]);
 
 
 };
