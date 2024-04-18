@@ -7,10 +7,10 @@ const port = 4321;
 
 // Configurar la conexión a la base de datos
 const client = new AstroDBClient({
-    user: 'lesleycamargo19@gmail.com',
-    password: '2004Lesley',
-    host: ' http://localhost',
-    port: 5432, // El puerto predeterminado de AstroDB
+    user: 'SadidCG',
+    password: '2004Lesley', // Asegúrate de proporcionar la contraseña correcta
+    host: 'astrodb-url.com', // Reemplaza con la URL correcta de AstroDB
+    port: 5432, // Puerto predeterminado de PostgreSQL para AstroDB
     database: 'cuberplas-web',
 });
 
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Ruta para manejar la solicitud POST del formulario
-app.post('/apiUsuario', async (req, res) => {
+app.post('/api/apiUsuario', async (req, res) => {
     const { name, lastname, user, password, role } = req.body;
 
     try {

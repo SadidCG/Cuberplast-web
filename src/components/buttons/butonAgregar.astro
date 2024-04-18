@@ -1,6 +1,18 @@
 ---
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
+import { db, usuario, } from 'astro:db';
+
+
+
+
+  // Aquí puedes definir los datos que deseas insertar en tu base de datos
+  
+
+
+
+
+
 
 
 ---
@@ -69,7 +81,7 @@ import Buton1 from "./buton1.astro";
 </dialog>
 
 <style>
-    .Buton1 {
+     .Buton1 {
         margin-left: 10px;
     }
     .container {
@@ -116,7 +128,7 @@ import Buton1 from "./buton1.astro";
     }
 
     .inputs input,
-    .inputs {
+    .inputs select {
         flex: 1; /* El input y select toma el espacio restante */
         border: 1px solid gray;
         border-radius: 5px;
@@ -129,6 +141,7 @@ import Buton1 from "./buton1.astro";
         border-radius: 5px;
         outline: none;
         padding: 5px;
+    ng: 5px;
     }
 </style>
 
@@ -172,33 +185,6 @@ import Buton1 from "./buton1.astro";
     }
 </script>
 <script>
-    const myForm3: HTMLFormElement | null = document.getElementById("myForm3") as HTMLFormElement;
-
-    if (myForm3) {
-        myForm3.addEventListener("submit", async (event) => {
-            event.preventDefault(); // Evitar que el formulario se envíe automáticamente
-
-            const formData = new FormData(myForm3); // Obtener los datos del formulario
-
-            try {
-                const response = await fetch('http://localhost:4321/src/pages/api/apiUsuario.js', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    // Si la solicitud se completó con éxito, puedes mostrar un mensaje al usuario o hacer cualquier otra acción necesaria
-                  
-                    console.log("Datos guardados correctamente");
-                } else {
-                    // Si hay algún error en la respuesta de la API, puedes manejarlo aquí
-                    console.error("Error al guardar los datos:", response.statusText);
-                }
-            } catch (error) {
-                // Si hay algún error en la solicitud (por ejemplo, problema de red), puedes manejarlo aquí
-                console.error("Error de red:", error);
-            }
-        });
-    }
+    
 </script>
 

@@ -1,25 +1,42 @@
-import { db, usuario, } from 'astro:db';
+import { db, usuario, Roles } from 'astro:db';
 
-console.log(usuario);
+export default async function () {
 
-export default async function seedDatabase() {
-  // Aquí puedes definir los datos que deseas insertar en tu base de datos
-  const usuarios = [
-    { name: 'Juan', lastname: 'Pérez', user: 'juanito', password: '123456', role: 'user' },
-    { name: 'María', lastname: 'Gómez', user: 'maria', password: 'password', role: 'admin' },
-    // Puedes agregar más datos de usuario según sea necesario
-  ];
+  
+  await db.insert(Roles).values([
+    {
+      id: 12,
+      rol_label: 'Administrador',
 
-  // Insertar los datos en la colección de usuarios
-  try {
-    for (const formData of usuarios) {
-      await db.insert(usuario);
+    },
+    {
+      id: 13,
+      rol_label: 'Usuario',
     }
-    console.log('Datos semilla insertados correctamente.');
-  } catch (error) {
-    console.error('Error al insertar datos semilla:', error);
-  }
-}
 
-// Llamar a la función para sembrar la base de datos
-seedDatabase();
+
+
+
+
+
+  ]);
+  await db.insert(usuario).values([{
+    nombres: 'Juanito',
+    apellidos: 'Pérez',
+    usuario: 'juanito',
+    contraseña: '<PASSWORD>',
+    rol_id: 12
+  },
+  {
+    nombres: 'María',
+    apellidos: 'Gómez',
+    usuario: 'maria',
+    contraseña: 'password',
+    rol_id: 13
+  }
+
+
+  ]);
+
+
+};

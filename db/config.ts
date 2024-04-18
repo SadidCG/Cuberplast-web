@@ -1,17 +1,27 @@
+
 import {column, defineDb, NOW } from 'astro:db';
 
 
-export const usuario={
+const usuario={
 	columns:{
 		id: column.number({ primaryKey: true }),
     	nombres: column.text(),
     	apellidos: column.text(),
-    	usuario: column.text(),
+    	usuario: column.text({unique:true}),
     	contraseña: column.text(),
-   		rol: column.text({ optional: true }),
-    	fecha_creacion: column.date({ default: NOW })
-	},
+    	fecha_creacion: column.date({ default: NOW }),
+		rol_id: column.number({references:()=>Roles.columns.id, nique: true  })
+	}
 }
+
+const Roles ={
+	columns:{
+        id: column.number({ primaryKey: true }),
+		rol_label: column.text({ unique: true })
+       
+    }
+}
+
 const seguimientos={
 	columns:{
 		id: column.number({ primaryKey: true }),
@@ -21,13 +31,16 @@ const seguimientos={
     	direccion: column.text(),
    		localidad: column.text({ optional: true }),
     	fecha: column.date({ default: NOW })
-	},
+	}
 }
+
+
 
 export default defineDb({
   tables: { 
     usuario, 
-	seguimientos
-  },
+	seguimientos,
+	Roles
+  }
 })
 

@@ -1,5 +1,6 @@
 ---
-
+import {db, usuario} from "astro:db"
+const usuarios = await db.select().from(usuario);
 ---
 
 
@@ -23,13 +24,12 @@
         <input type="password" class="inputText" placeholder="Contraseña" id="contraseña" autofocus>
         <button type="submit" value="Iniciar sesión" class="boton" id="submitBtn" > Iniciar sesión</button>
     </div>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p id="modalMessage"></p>
-        </div>
+    <div>
+    <div class="bg-white">
+        {
+            usuarios.map(usuario =>(<li>{usuario.nombres}</li>))
+        }
     </div>
-
 </form>
 
 
