@@ -1,18 +1,27 @@
 ---
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
-import { db, usuario, } from 'astro:db';
+import {db, Roles, usuario} from "astro:db"
 
+if (Astro.request.method == "POST"){
 
+    const formData = await Astro.request.formData();
+    const nombres = formData.get("nombres1");
+    const apellidos = formData.get("apellidos1");
+    const usuario = formData.get("usuario1");
+    const contraseña = formData.get("contraseña1");
+    const rol = formData.get("rol1");
+    console.log(nombres, apellidos, usuario, contraseña,rol);
+    if(typeof nombres === 'string' && apellidos === 'string' && usuario === 'string' && contraseña === 'string' && rol === 'string'){
+        await db.insert(usuario). values({nombres, apellidos, usuario, contraseña, rol});
 
+    }
 
-  // Aquí puedes definir los datos que deseas insertar en tu base de datos
-  
+    
 
+}
 
-
-
-
+const rol = await db.select().from(Roles);
 
 
 ---
@@ -47,31 +56,33 @@ import { db, usuario, } from 'astro:db';
                 fill-rule="evenodd"></path></svg
         >
     </button>
-    <form id="myForm3" class="Form"  enctype="multipart/form-data">
+    <form id="myForm3" class="Form"  method="post">
         <h1 class="titulo text-4xl">Crear usuario</h1>
         <div class="inputs">
             <label class="text-xl">Nombres:</label>
-            <input type="text" id="name" class="text-lg" autofocus/>
+            <input type="text" id="name" name="nombres1" class="text-lg" autofocus/>
         </div>
         <div class="inputs">
             <label class="text-xl">Apellidos:</label>
-            <input type="text" id="lastname" class="text-lg" autofocus />
+            <input type="text" id="lastname" name="apellidos1" class="text-lg" autofocus />
         </div>
         <div class="inputs">
             <label class="text-xl">Usuario:</label>
-            <input type="text" id="user" class="text-lg" autofocus/>
+            <input type="text" id="user" name="usuario1" class="text-lg" autofocus/>
         </div>
         <div class="inputs">
             <label for="password" class="text-xl">Contraseña:</label>
-            <input type="password" id="password" class="text-lg" autofocus/>
+            <input type="password" id="password" name="contraseña1" class="text-lg" autofocus/>
         </div>
         <div class="inputs">
             <label class="text-xl">Rol:</label>
-            <select id="role" class="form-select text-lg"  >
-                <option selected>Seleccionar...</option>
-                <option>Administrador</option>
-                <option>Usuario</option>
+            <select id="role" name="rol1" class="form-select text-lg"  >
+            
+                {
+                    rol.map(Roles =>(<option value={Roles.id}>{Roles.rol_label}</option>))
+                }
             </select>
+            
         </div>
 
         <div class="flex mt-8 ml-12">
