@@ -13,7 +13,7 @@ if (Astro.request.method == "POST"){
     const rol = formData.get("rol1");
     console.log(nombres, apellidos, usuario, contraseña,rol);
     if(typeof nombres === 'string' && apellidos === 'string' && usuario === 'string' && contraseña === 'string' && rol === 'string'){
-        await db.insert(usuario). values({nombres, apellidos, usuario, contraseña, rol});
+        await db.insert(usuario).values({nombres, apellidos, usuario, contraseña, rol});
 
     }
 
