@@ -1,6 +1,33 @@
 ---
+
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
+import{db, localidades,Pedidos} from 'astro:db'
+const rol = await db.select().from(localidades);
+
+if (Astro.request.method == "POST") {
+    const formData = await Astro.request.formData();
+    const producto = formData.get("producto");
+    const cantidad = formData.get("cantidad"); // Parseamos a entero
+    const direccion = formData.get("direccion");
+    const destino = formData.get("destino");
+    const localidad = formData.get("localidad"); // Parseamos a entero
+    console.log(formData);
+
+    if (typeof producto === 'string' && cantidad==='number' && typeof direccion === 'string' && typeof destino === 'string' && localidad==='number') {
+        // Asumiendo que 'db' es tu objeto de base de datos SQLite y 'Pedidos' es tu tabla
+        await db.insert(Pedidos).values({
+            nombre_producto: producto,
+            cantidad: cantidad,
+            direccion: direccion,
+            destino: destino,
+            localidad: localidad
+        }).run();
+    }
+}
+
+const pedido = await db.select().from(Pedidos);
+
 ---
 
 <!-- HTML -->
@@ -33,48 +60,32 @@ import Buton1 from "./buton1.astro";
                 fill-rule="evenodd"></path></svg
         >
     </button>
-    <form id="myForm2" class="Form">
+    <form id="myForm2" class="Form" method="post">
         <h1 class="titulo text-4xl">Crear Seguimiento</h1>
         <div class="inputs">
             <label class="text-xl">Producto:</label>
-            <input type="text" id="hora1" class="text-lg" autofocus />
+            <input type="text" id="hora1" name="producto" class="text-lg" autofocus />
+        </div>
+        <div class="inputs">
+            <label class="text-xl">Cantidad:</label>
+            <input type="number" id="hora1" name="cantidad" class="text-lg" autofocus />
         </div>
         <div class="inputs">
             <label class="text-xl">Dirección:</label>
-            <input type="text" id="hora2" class="text-lg" autofocus />
+            <input type="text" id="hora2" name="direccion" class="text-lg" autofocus />
         </div>
         <div class="inputs">
             <label class="text-xl">Destino:</label>
-            <input type="text" id="hora3" class="text-lg" autofocus />
+            <input type="text" id="hora3" name="destino" class="text-lg" autofocus />
         </div>
-        <div class="inputs">
-            <label for="password" class="text-xl">Contraseña:</label>
-            <input type="password" id="hora4" class="text-lg" autofocus />
-        </div>
+        
         <div class="inputs">
             <label class="form-label text-xl">Localidad:</label>
-            <select id="localidad" class="form-select text-lg">
-                <option selected>Seleccionar...</option>
-                <option>Antonio Nariño</option>
-                <option>Barrios Unidos</option>
-                <option>Bosa</option>
-                <option>Chapinero</option>
-                <option>Ciudad Bolívar</option>
-                <option>Engativá</option>
-                <option>Fontibón</option>
-                <option>Kennedy</option>
-                <option>La Candelaria</option>
-                <option>Los Mártires</option>
-                <option>Puente Aranda</option>
-                <option>Rafael Uribe Uribe</option>
-                <option>San Cristobal</option>
-                <option>Santa Fe</option>
-                <option>Suba</option>
-                <option>Sumapaz</option>
-                <option>Teusaquillo</option>
-                <option>Tunjuelito</option>
-                <option>Usaquén</option>
-                <option>Usme</option>
+            <select id="localidad" class="form-select text-lg" name="localidad">
+                
+                {
+                    rol.map(localidades =>(<option value={localidades.id}>{localidades.nombre_localidad}</option>))
+                }
             </select>
         </div>
 

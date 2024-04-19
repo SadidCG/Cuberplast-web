@@ -1,6 +1,16 @@
 ---
-const { uid, unombre, uapellidos, uusuario, urol } = Astro.props;
+
 import Butonborrcanc from "./buttons/botonesBorr-canc.astro";
+
+import { db,usuario, Roles } from 'astro:db'
+import { eq } from "astro:db";
+
+// Obtener los pedidos con el nombre de la localidad
+const user = await db.select()
+    .from(usuario)
+    .innerJoin(Roles, eq(usuario.rol_id, Roles.id));
+
+
 ---
 
 <table class="table">
@@ -15,111 +25,24 @@ import Butonborrcanc from "./buttons/botonesBorr-canc.astro";
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td id="Pro">{uid}</td>
-      <td id="Dir">{unombre}</td>
-      <td id="Des">{uapellidos}</td>
-      <td id="Loc">{uusuario}</td>
-      <td id="Est">{urol}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{uid}</td>
-      <td id="Dir">{unombre}</td>
-      <td id="Des">{uapellidos}</td>
-      <td id="Loc">{uusuario}</td>
-      <td id="Est">{urol}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{uid}</td>
-      <td id="Dir">{unombre}</td>
-      <td id="Des">{uapellidos}</td>
-      <td id="Loc">{uusuario}</td>
-      <td id="Est">{urol}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{uid}</td>
-      <td id="Dir">{unombre}</td>
-      <td id="Des">{uapellidos}</td>
-      <td id="Loc">{uusuario}</td>
-      <td id="Est">{urol}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{uid}</td>
-      <td id="Dir">{unombre}</td>
-      <td id="Des">{uapellidos}</td>
-      <td id="Loc">{uusuario}</td>
-      <td id="Est">{urol}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{uid}</td>
-      <td id="Dir">{unombre}</td>
-      <td id="Des">{uapellidos}</td>
-      <td id="Loc">{uusuario}</td>
-      <td id="Est">{urol}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{uid}</td>
-      <td id="Dir">{unombre}</td>
-      <td id="Des">{uapellidos}</td>
-      <td id="Loc">{uusuario}</td>
-      <td id="Est">{urol}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Editar</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
+    {user.map((pedido) => (
+      <tr >
+        <td>{pedido.usuario.id}</td>
+        <td>{pedido.usuario.nombres}</td>
+        <td>{pedido.usuario.apellidos}</td>
+        <td>{pedido.usuario.usuario}</td>
+        <td>{pedido.Roles.rol_label}</td>
+        
+        <td>
+          <a class="btnEditar" href="../VistasSecundarias/verDetalles">
+            Ver detalles
+          </a>
+          <button type="button" class="btnBorrar" id="openModalBtn1">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    ))}
   </tbody>
 </table>
 <dialog

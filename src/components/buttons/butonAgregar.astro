@@ -11,13 +11,20 @@ if (Astro.request.method == "POST"){
     const usuario1 = formData.get("usuario1");
     const contraseña = formData.get("contraseña1");
     const rol = formData.get("rol1");
-   
-    if(typeof nombres === 'string' && apellidos === 'string' && usuario1 === 'string' && contraseña === 'string' && rol === 'number'){
-        await db.insert(usuario).values({nombres, apellidos, usuario1, contraseña, rol});
-        
-
-    }
     console.log(nombres, apellidos, usuario1, contraseña,rol);
+   
+    if (typeof nombres === 'string' && typeof apellidos === 'string' && typeof usuario1 === 'string' && typeof contraseña === 'string' && typeof rol === 'number') {
+    // Asumiendo que 'db' es tu objeto de base de datos SQLite y 'Usuarios' es tu tabla
+    await db.insert(usuario).values({
+        nombres: nombres,
+        apellidos: apellidos,
+        usuario: usuario1,
+        contraseña: contraseña,
+        rol_id: rol
+    }).run();
+}
+
+    
 
     
 

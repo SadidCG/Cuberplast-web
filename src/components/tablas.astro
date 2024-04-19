@@ -1,127 +1,50 @@
 ---
-const { producto, direccion, destino, localidad, estado } = Astro.props;
-import Butonborrcanc from "./buttons/botonesBorr-canc.astro";
----
 
+import Butonborrcanc from "./buttons/botonesBorr-canc.astro";
+import { db, Pedidos, localidades } from 'astro:db'
+import { eq } from "astro:db";
+
+// Obtener los pedidos con el nombre de la localidad
+const pedido = await db.select()
+    .from(Pedidos)
+    .innerJoin(localidades, eq(Pedidos.localidad_id, localidades.id));
+
+
+---
 <table class="table">
   <thead>
     <tr>
       <th id="Pro" style="font-weight: 600; font-size: larger;">Producto</th>
+      <th id="Can" style="font-weight: 600; font-size: larger;">Cantidad</th>
       <th id="Dir" style="font-weight: 600; font-size: larger;">Dirección</th>
       <th id="Des" style="font-weight: 600; font-size: larger;">Destino</th>
       <th id="Loc" style="font-weight: 600; font-size: larger;">Localidad</th>
-      <th id="Est" style="font-weight: 600; font-size: larger;">Estado</th>
+      <th id="Est" style="font-weight: 600; font-size: larger;">Fecha</th>
       <th style="font-weight: 600; font-size: larger;">Acciones</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td id="Pro">{producto}</td>
-      <td id="Dir">{direccion}</td>
-      <td id="Des">{destino}</td>
-      <td id="Loc">{localidad}</td>
-      <td id="Est">{estado}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn1"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{producto}</td>
-      <td id="Dir">{direccion}</td>
-      <td id="Des">{destino}</td>
-      <td id="Loc">{localidad}</td>
-      <td id="Est">{estado}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn1"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{producto}</td>
-      <td id="Dir">{direccion}</td>
-      <td id="Des">{destino}</td>
-      <td id="Loc">{localidad}</td>
-      <td id="Est">{estado}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn1"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{producto}</td>
-      <td id="Dir">{direccion}</td>
-      <td id="Des">{destino}</td>
-      <td id="Loc">{localidad}</td>
-      <td id="Est">{estado}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn1"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{producto}</td>
-      <td id="Dir">{direccion}</td>
-      <td id="Des">{destino}</td>
-      <td id="Loc">{localidad}</td>
-      <td id="Est">{estado}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn1"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{producto}</td>
-      <td id="Dir">{direccion}</td>
-      <td id="Des">{destino}</td>
-      <td id="Loc">{localidad}</td>
-      <td id="Est">{estado}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn1"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
-    <tr>
-      <td id="Pro">{producto}</td>
-      <td id="Dir">{direccion}</td>
-      <td id="Des">{destino}</td>
-      <td id="Loc">{localidad}</td>
-      <td id="Est">{estado}</td>
-      <td>
-        <a class="btnEditar" href="../VistasSecundarias/verDetalles"
-          >Ver detalles</a
-        >
-        <button type="button" class="btnBorrar" id="openModalBtn1"
-          >Eliminar</button
-        >
-      </td>
-    </tr>
+    {pedido.map((pedido) => (
+      <tr >
+        <td>{pedido.Pedidos.nombre_producto}</td>
+        <td>{pedido.Pedidos.cantidad}</td>
+        <td>{pedido.Pedidos.direccion}</td>
+        <td>{pedido.Pedidos.destino}</td>
+        <td>{pedido.localidades.nombre_localidad}</td>
+        <td>{pedido.Pedidos.fecha}</td>
+        <td>
+          <a class="btnEditar" href="../VistasSecundarias/verDetalles">
+            Ver detalles
+          </a>
+          <button type="button" class="btnBorrar" id="openModalBtn1">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    ))}
   </tbody>
 </table>
+
 <dialog
   id="myModal"
   class="modal bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
