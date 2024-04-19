@@ -11,7 +11,8 @@ if (Astro.request.method == "POST"){
     const usuario1 = formData.get("usuario1");
     const contraseña = formData.get("contraseña1");
     const rol = formData.get("rol1");
-    console.log(nombres, apellidos, usuario1, contraseña,rol);
+   console.log(formData)
+    
    
     if (typeof nombres === 'string' && typeof apellidos === 'string' && typeof usuario1 === 'string' && typeof contraseña === 'string' && typeof rol === 'number') {
     // Asumiendo que 'db' es tu objeto de base de datos SQLite y 'Usuarios' es tu tabla
@@ -69,19 +70,19 @@ const rol = await db.select().from(Roles);
         <h1 class="titulo text-4xl">Crear usuario</h1>
         <div class="inputs">
             <label class="text-xl">Nombres:</label>
-            <input type="text" id="name" name="nombres1" class="text-lg" autofocus/>
+            <input type="text" id="name" name="nombres1" class="text-lg" autofocus required/>
         </div>
         <div class="inputs">
             <label class="text-xl">Apellidos:</label>
-            <input type="text" id="lastname" name="apellidos1" class="text-lg" autofocus />
+            <input type="text" id="lastname" name="apellidos1" class="text-lg" autofocus required />
         </div>
         <div class="inputs">
             <label class="text-xl">Usuario:</label>
-            <input type="text" id="user" name="usuario1" class="text-lg" autofocus/>
+            <input type="text" id="user" name="usuario1" class="text-lg" autofocus required/>
         </div>
         <div class="inputs">
             <label for="password" class="text-xl">Contraseña:</label>
-            <input type="password" id="password" name="contraseña1" class="text-lg" autofocus/>
+            <input type="password" id="password" name="contraseña1" class="text-lg" autofocus required/>
         </div>
         <div class="inputs">
             <label class="text-xl">Rol:</label>

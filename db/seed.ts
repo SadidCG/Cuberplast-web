@@ -40,7 +40,7 @@ export default async function () {
     usuario: 'Lesley1',
     contraseña: 'camargo19',
     rol_id: 1
-  },
+  }
 
 
 

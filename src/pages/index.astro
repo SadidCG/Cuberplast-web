@@ -27,7 +27,7 @@ const usuarios = await db.select().from(usuario);
     <div>
     <div class="bg-white">
         {
-            usuarios.map(usuario =>(<li>{usuario.nombres}</li>))
+            usuarios.map(usuario =>(<li>{usuario.usuario}</li>))
         }
     </div>
 </form>

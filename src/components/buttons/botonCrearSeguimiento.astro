@@ -1,9 +1,7 @@
 ---
-
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
-import{db, localidades,Pedidos} from 'astro:db'
-const rol = await db.select().from(localidades);
+import { db, localidades, Pedidos } from "astro:db";
 
 if (Astro.request.method == "POST") {
     const formData = await Astro.request.formData();
@@ -12,22 +10,25 @@ if (Astro.request.method == "POST") {
     const direccion = formData.get("direccion");
     const destino = formData.get("destino");
     const localidad = formData.get("localidad"); // Parseamos a entero
-    console.log(formData);
 
-    if (typeof producto === 'string' && cantidad==='number' && typeof direccion === 'string' && typeof destino === 'string' && localidad==='number') {
-        // Asumiendo que 'db' es tu objeto de base de datos SQLite y 'Pedidos' es tu tabla
+    if (
+        typeof producto === "string" &&
+        typeof cantidad === "undefined" &&
+        typeof direccion === "string" &&
+        typeof destino === "string" &&
+        typeof localidad === "string"
+    ) {
         await db.insert(Pedidos).values({
             nombre_producto: producto,
             cantidad: cantidad,
             direccion: direccion,
             destino: destino,
-            localidad: localidad
+            localidad: localidad,
         }).run();
     }
 }
 
-const pedido = await db.select().from(Pedidos);
-
+const rol = await db.select().from(localidades);
 ---
 
 <!-- HTML -->
@@ -64,27 +65,54 @@ const pedido = await db.select().from(Pedidos);
         <h1 class="titulo text-4xl">Crear Seguimiento</h1>
         <div class="inputs">
             <label class="text-xl">Producto:</label>
-            <input type="text" id="hora1" name="producto" class="text-lg" autofocus />
+            <input
+                type="text"
+                id="hora1"
+                name="producto"
+                class="text-lg"
+                autofocus
+            />
         </div>
         <div class="inputs">
             <label class="text-xl">Cantidad:</label>
-            <input type="number" id="hora1" name="cantidad" class="text-lg" autofocus />
+            <input
+                type="number"
+                id="hora1"
+                name="cantidad"
+                class="text-lg"
+                autofocus
+            />
         </div>
         <div class="inputs">
             <label class="text-xl">Dirección:</label>
-            <input type="text" id="hora2" name="direccion" class="text-lg" autofocus />
+            <input
+                type="text"
+                id="hora2"
+                name="direccion"
+                class="text-lg"
+                autofocus
+            />
         </div>
         <div class="inputs">
             <label class="text-xl">Destino:</label>
-            <input type="text" id="hora3" name="destino" class="text-lg" autofocus />
+            <input
+                type="text"
+                id="hora3"
+                name="destino"
+                class="text-lg"
+                autofocus
+            />
         </div>
-        
+
         <div class="inputs">
             <label class="form-label text-xl">Localidad:</label>
             <select id="localidad" class="form-select text-lg" name="localidad">
-                
                 {
-                    rol.map(localidades =>(<option value={localidades.id}>{localidades.nombre_localidad}</option>))
+                    rol.map((localidades) => (
+                        <option value={localidades.id}>
+                            {localidades.nombre_localidad}
+                        </option>
+                    ))
                 }
             </select>
         </div>
