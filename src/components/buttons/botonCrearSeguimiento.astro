@@ -2,7 +2,7 @@
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
 import { db, localidades, Pedidos } from "astro:db";
-
+const loc = await db.select().from(localidades);
 if (Astro.request.method == "POST") {
     const formData = await Astro.request.formData();
     const producto = formData.get("producto");
@@ -13,7 +13,7 @@ if (Astro.request.method == "POST") {
 
     if (
         typeof producto === "string" &&
-        typeof cantidad === "undefined" &&
+        typeof cantidad === "string" &&
         typeof direccion === "string" &&
         typeof destino === "string" &&
         typeof localidad === "string"
@@ -28,7 +28,7 @@ if (Astro.request.method == "POST") {
     }
 }
 
-const rol = await db.select().from(localidades);
+
 ---
 
 <!-- HTML -->
@@ -108,7 +108,7 @@ const rol = await db.select().from(localidades);
             <label class="form-label text-xl">Localidad:</label>
             <select id="localidad" class="form-select text-lg" name="localidad">
                 {
-                    rol.map((localidades) => (
+                    loc.map((localidades) => (
                         <option value={localidades.id}>
                             {localidades.nombre_localidad}
                         </option>

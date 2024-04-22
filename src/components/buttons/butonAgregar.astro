@@ -3,33 +3,42 @@ import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
 import {db, Roles, usuario} from "astro:db"
 
-if (Astro.request.method == "POST"){
-
+if (Astro.request.method == "POST") {
     const formData = await Astro.request.formData();
     const nombres = formData.get("nombres1");
     const apellidos = formData.get("apellidos1");
     const usuario1 = formData.get("usuario1");
     const contraseña = formData.get("contraseña1");
     const rol = formData.get("rol1");
-   console.log(formData)
-    
-   
-    if (typeof nombres === 'string' && typeof apellidos === 'string' && typeof usuario1 === 'string' && typeof contraseña === 'string' && typeof rol === 'number') {
-    // Asumiendo que 'db' es tu objeto de base de datos SQLite y 'Usuarios' es tu tabla
-    await db.insert(usuario).values({
-        nombres: nombres,
-        apellidos: apellidos,
-        usuario: usuario1,
-        contraseña: contraseña,
-        rol_id: rol
-    }).run();
+
+    console.log(nombres, apellidos, usuario1, contraseña, rol);
+
+    if (
+        typeof nombres === 'string' &&
+        typeof apellidos === 'string' &&
+        typeof usuario1 === 'string' &&
+        typeof contraseña === 'string' &&
+        typeof rol === 'string' // Cambiado a 'string' ya que el valor de 'rol' vendrá como texto desde el formulario
+    ) {
+        // Asumiendo que 'db' es tu objeto de base de datos SQLite y 'Usuarios' es tu tabla
+        try {
+            await db.insert(usuario).values({
+                nombres: nombres,
+                apellidos: apellidos,
+                usuario: usuario1,
+                contraseña: contraseña,
+                rol_id: rol
+            }).run();
+
+            console.log("Datos insertados correctamente.");
+            // Puedes mostrar un mensaje de éxito o redireccionar a otra página si lo deseas
+        } catch (error) {
+            console.error("Error al insertar datos:", error);
+            // Aquí puedes manejar el error de alguna manera, ya sea mostrando un mensaje de error en la página o guardando registros de errores en la base de datos, etc.
+        }
+    }
 }
 
-    
-
-    
-
-}
 
 const rol = await db.select().from(Roles);
 
@@ -168,39 +177,39 @@ const rol = await db.select().from(Roles);
 
 <script>
     // TypeScript
-    const openModalBtn: HTMLButtonElement | null = document.getElementById(
+    const openModalBtn3: HTMLButtonElement | null = document.getElementById(
         "openModalBtn3",
     ) as HTMLButtonElement;
-    const myModal: HTMLDialogElement | null = document.getElementById(
+    const myModal3: HTMLDialogElement | null = document.getElementById(
         "myModal3",
     ) as HTMLDialogElement;
-    const myForm: HTMLFormElement | null = document.getElementById(
+    const myForm3: HTMLFormElement | null = document.getElementById(
         "myForm3",
     ) as HTMLFormElement;
-    const closeButton: HTMLButtonElement | null = document.getElementById(
+    const closeButton3: HTMLButtonElement | null = document.getElementById(
         "close-dialog3",
     ) as HTMLButtonElement;
 
-    if (openModalBtn && myModal && myForm && closeButton) {
-        openModalBtn.addEventListener("click", () => {
-            myModal.showModal();
+    if (openModalBtn3 && myModal3 && myForm3 && closeButton3) {
+        openModalBtn3.addEventListener("click", () => {
+            myModal3.showModal();
         });
 
-        closeButton.addEventListener("click", () => {
-            myModal.close();
+        closeButton3.addEventListener("click", () => {
+            myModal3.close();
         });
 
         // Cerrar el modal cuando se hace clic fuera de él
-        myModal.addEventListener("click", (event) => {
-            if (event.target === myModal) {
-                myModal.close();
+        myModal3.addEventListener("click", (event) => {
+            if (event.target === myModal3) {
+                myModal3.close();
             }
         });
 
         // Cerrar el modal cuando se presiona la tecla Esc
         window.addEventListener("keydown", (event) => {
-            if (event.key === "Escape" && myModal.open) {
-                myModal.close();
+            if (event.key === "Escape" && myModal3.open) {
+                myModal3.close();
             }
         });
     }
