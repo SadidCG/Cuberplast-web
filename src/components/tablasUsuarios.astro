@@ -30,7 +30,7 @@ const user = await db.select()
         <td>{usuarios.usuario.id}</td>
         <td>{usuarios.usuario.nombres}</td>
         <td>{usuarios.usuario.apellidos}</td>
-        <td>{usuarios.usuario.usuario}</td>
+        <td>{usuarios.usuario.user}</td>
         <td>{usuarios.Roles.rol_label}</td>
         
         <td>
@@ -192,29 +192,6 @@ if (openModalBtns1 && myModal && myForm && closeButton) {
 }
 
 // app.js (o donde estés manejando la lógica del cliente)
-
-const eliminarUsuario = async (userId: string) => {
-  try {
-    const response = await fetch(`http://localhost:3000/eliminarUsuario/${userId}`, {
-      method: 'DELETE'
-    });
-
-    if (response.ok) {
-      console.log('Usuario eliminado correctamente');
-      // Realizar cualquier otra acción después de la eliminación exitosa
-    } else {
-      console.error('Error al eliminar el usuario:', response.statusText);
-      // Realizar cualquier acción en caso de error
-    }
-  } catch (error) {
-    console.error('Error al procesar la solicitud DELETE:', error);
-    // Realizar cualquier acción en caso de error
-  }
-};
-
-// Luego, en algún lugar de tu código donde quieras eliminar un usuario, puedes llamar a esta función
-const userIdToDelete = '1';
-eliminarUsuario(userIdToDelete);
 
 
 </script>

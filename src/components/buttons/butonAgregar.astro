@@ -1,43 +1,8 @@
 ---
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
-import {db, Roles, usuario} from "astro:db"
+import {db, Roles} from "astro:db"
 
-if (Astro.request.method == "POST") {
-    const formData = await Astro.request.formData();
-    const nombres = formData.get("nombres1");
-    const apellidos = formData.get("apellidos1");
-    const usuario1 = formData.get("usuario1");
-    const contraseña = formData.get("contraseña1");
-    const rol = formData.get("rol1");
-
-    console.log(nombres, apellidos, usuario1, contraseña, rol);
-
-    if (
-        typeof nombres === 'string' &&
-        typeof apellidos === 'string' &&
-        typeof usuario1 === 'string' &&
-        typeof contraseña === 'string' &&
-        typeof rol === 'string' // Cambiado a 'string' ya que el valor de 'rol' vendrá como texto desde el formulario
-    ) {
-        // Asumiendo que 'db' es tu objeto de base de datos SQLite y 'Usuarios' es tu tabla
-        try {
-            await db.insert(usuario).values({
-                nombres: nombres,
-                apellidos: apellidos,
-                usuario: usuario1,
-                contraseña: contraseña,
-                rol_id: rol
-            }).run();
-
-            console.log("Datos insertados correctamente.");
-            // Puedes mostrar un mensaje de éxito o redireccionar a otra página si lo deseas
-        } catch (error) {
-            console.error("Error al insertar datos:", error);
-            // Aquí puedes manejar el error de alguna manera, ya sea mostrando un mensaje de error en la página o guardando registros de errores en la base de datos, etc.
-        }
-    }
-}
 
 
 const rol = await db.select().from(Roles);
@@ -75,7 +40,7 @@ const rol = await db.select().from(Roles);
                 fill-rule="evenodd"></path></svg
         >
     </button>
-    <form id="myForm3" class="Form"  method="post">
+    <form id="myForm3" class="Form"  method="post" action="/api/signup">
         <h1 class="titulo text-4xl">Crear usuario</h1>
         <div class="inputs">
             <label class="text-xl">Nombres:</label>
@@ -87,7 +52,7 @@ const rol = await db.select().from(Roles);
         </div>
         <div class="inputs">
             <label class="text-xl">Usuario:</label>
-            <input type="text" id="user" name="usuario1" class="text-lg" autofocus required/>
+            <input type="text" id="user" name="usuarioform" class="text-lg" autofocus required/>
         </div>
         <div class="inputs">
             <label for="password" class="text-xl">Contraseña:</label>
@@ -212,9 +177,29 @@ const rol = await db.select().from(Roles);
                 myModal3.close();
             }
         });
+
+        // Manejar el envío del formulario
+        myForm3.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(myForm3);
+            const response = await fetch(myForm3.action, {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                // Cerrar el modal si la respuesta es exitosa
+                myModal3.close();
+                // Redireccionar a la página de usuarios
+                window.location.href = "/usuarios.astro";
+            } else {
+                // Manejar errores de la respuesta
+                console.error("Error al enviar el formulario:", response.statusText);
+                // Aquí puedes mostrar un mensaje de error al usuario si lo deseas
+            }
+        });
     }
 </script>
-<script>
-    
-</script>
+
 

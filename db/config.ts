@@ -1,28 +1,38 @@
 
 import {column, defineDb, NOW, } from 'astro:db';
+import { defineTable } from 'astro:db';
 
 
-const usuario={
+const usuario= defineTable({
 	columns:{
-		id: column.number({ primaryKey: true, autoIncrement:true }),
+		id: column.text({ primaryKey: true, autoIncrement:true }),
     	nombres: column.text(),
     	apellidos: column.text(),
-    	usuario: column.text({unique:true}),
+      user: column.text({unique:true}),
+    	
     	contraseña: column.text(),
     	fecha_creacion: column.date({ default: NOW }),
 		rol_id: column.number({references:()=>Roles.columns.id})
 	}
-}
+});
 
-const Roles ={
+const Roles = defineTable({
 	columns:{
-        id: column.number({ primaryKey: true }),
+    id: column.number({ primaryKey: true }),
 		rol_label: column.text()
        
     }
-}
+})
+const Sesiones = defineTable({
+  columns:{
+    id:column.text({optional: false, unique:true}),
+    userId:column.text({optional: false, references:() => usuario.columns.id}),
+    expiresAt:column.text({optional:false})
+
+  }
+})
   
-const Pedidos = {
+const Pedidos = defineTable ({
     columns: {
         id: column.number({ primaryKey: true }),
         nombre_producto: column.text(),
@@ -32,16 +42,16 @@ const Pedidos = {
         localidad_id: column.number({ references: () => localidades.columns.id }),
         fecha: column.date({ default: NOW })
     }
-};
+});
 
 
-const localidades={
+const localidades= defineTable({
 	columns:{
         id: column.number({ primaryKey: true }),
         nombre_localidad: column.text()
     }
 	
-}
+})
 
 
 
@@ -50,7 +60,8 @@ export default defineDb({
   usuario, 
 	Pedidos,
 	Roles, 
-	localidades
+	localidades,
+  Sesiones
   }
 })
 

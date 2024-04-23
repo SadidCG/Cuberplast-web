@@ -23,28 +23,28 @@ export default async function () {
   await db.insert(usuario).values([{
     nombres: 'Juanito',
     apellidos: 'Pérez',
-    usuario: 'juanito',
+    user: 'juanito',
     contraseña: '<PASSWORD>',
     rol_id: 2
   },
   {
     nombres: 'María',
     apellidos: 'Gómez',
-    usuario: 'maria',
+    user: 'maria',
     contraseña: 'password',
     rol_id: 2
   },
   {
     nombres: 'Lesley Sadid',
     apellidos: 'Camargo Gutierrez',
-    usuario: 'Lesley1',
+    user: 'Lesley1',
     contraseña: 'camargo19',
     rol_id: 1
   },
   {
     nombres: 'Maríaadad',
     apellidos: 'Gómez',
-    usuario: 'maria123',
+    user: 'maria123',
     contraseña: 'password',
     rol_id: 2
   }

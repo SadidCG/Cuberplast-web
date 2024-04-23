@@ -1,8 +1,10 @@
 ---
 import {db, usuario} from "astro:db"
 const usuarios = await db.select().from(usuario);
----
 
+
+
+---
 
 <!DOCTYPE html>
 <html lang="es">
@@ -14,99 +16,81 @@ const usuarios = await db.select().from(usuario);
     <title>Login</title>
 </head>
 
-<form id="loginForm" class="form">
+<body>
     <div class="container">
-        
         <h1 class="text-9xl mb-3">Iniciar sesión</h1>
-
-        <input type="text" class="inputText" placeholder="Usuario" id="usuario" autofocus>
-
-        <input type="password" class="inputText" placeholder="Contraseña" id="contraseña" autofocus>
-        <button type="submit" value="Iniciar sesión" class="boton" id="submitBtn" > Iniciar sesión</button>
+        <form id="loginForm" class="form" method="POST">
+            <input type="text" class="inputText" placeholder="Usuario" id="usuario" autofocus>
+            <input type="password" class="inputText" placeholder="Contraseña" id="contraseña">
+            <button type="submit" class="boton" id="submitBtn">Iniciar sesión</button>
+        </form>
     </div>
-    <div>
-    <div class="bg-white">
-        {
-            usuarios.map(usuario =>(<li>{usuario.nombres}</li>))
+
+    <style>
+        /*colores: #191A25,#9A0000,#3F3E3B,#8D8979,#D9D9DC*/
+
+        body {
+            font-family: Arial;
+            background: url('public/img/laminas-y-tejas-en-policarbonato.jpg') no-repeat scroll 0 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            width: auto;
+            height: 100%;
         }
-    </div>
-</form>
 
+        .container {
+            width: 300px;
+            margin: 100px auto;
+            text-align: center;
+            margin-top: 200px;
+        }
 
+        .inputText {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            box-sizing: border-box;
+        }
 
+        .inputText:focus {
+            outline: none;
+            border-color: #9A0000;
+            /* Cambiar el color del borde cuando está enfocado */
+        }
 
-<style>
-	/*colores: #191A25,#9A0000,#3F3E3B,#8D8979,#D9D9DC*/
+        .boton {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(to bottom right, #ff191d, #9A0000);
+            color: #fff;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all 200ms;
+        }
 
-body {
-    font-family: Arial;
-    background: url('public/img/laminas-y-tejas-en-policarbonato.jpg') no-repeat scroll 0 0;
-    background-size:cover ;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-   
-    width: auto;
-    height: 100%;
-    
-}
+        .boton:hover {
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            background: none;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 10px rgba(255, 255, 255, 1), 0 0 10px rgba(255, 255, 255, 1);
+            transition: all 300ms;
+        }
 
-.container {
-    width: 300px;
-    margin: 100px auto;
-    text-align: center;
-    margin-top: 200px;
+        h1 {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 3px rgba(255, 255, 255, 1), 0 0 4px rgb(80, 80, 80);
+            font-size: 40px;
+        }
+    </style>
 
-}
+    <script>
+     
+    </script>
+</body>
 
-
-.inputText {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 9px;
-    box-sizing: border-box;
-}
-
-.inputText:focus {
-    outline: none;
-    border-color:  #9A0000;
-    /* Cambiar el color del borde cuando está enfocado */
-}
-
-.boton {
-    width: 100%;
-    padding: 10px;
-    background: linear-gradient(to bottom right, #ff191d,  #9A0000);
-    color: #fff;
-    border: none;
-    border-radius: 9px;
-    cursor: pointer;
-    transition: all 200ms;
-}
-
-.boton:hover {
-    border: 1px solid#ffffff;
-    color: #ffffff;
-    background:none;
-    
-    box-shadow: 0 0 10px rgba(255,255,255,1) ,
-     0 0 10px rgba(255,255,255,1) , 
-     0 0 10px rgba(255,255,255,1) ;
-
-     transition: all 300ms;
-}
-
-
-h1 {
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255,255,255,1) ,
-     0 0 3px rgba(255,255,255,1) , 
-     0 0 4px rgb(80, 80, 80) ;
-
-    font-size: 40px;
-
-}
-
-
+</html>
