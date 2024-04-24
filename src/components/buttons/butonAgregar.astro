@@ -1,7 +1,9 @@
 ---
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
-import {db, Roles} from "astro:db"
+
+import {db, Roles, } from "astro:db"
+
 
 
 
@@ -40,23 +42,23 @@ const rol = await db.select().from(Roles);
                 fill-rule="evenodd"></path></svg
         >
     </button>
-    <form id="myForm3" class="Form"  method="post" action="/api/signup">
+    <form id="myForm3" class="Form"  method="post" action="/api/signup" >
         <h1 class="titulo text-4xl">Crear usuario</h1>
         <div class="inputs">
             <label class="text-xl">Nombres:</label>
-            <input type="text" id="name" name="nombres1" class="text-lg" autofocus required/>
+            <input type="text" id="name" name="nombres1" class="text-lg" autofocus/>
         </div>
         <div class="inputs">
             <label class="text-xl">Apellidos:</label>
-            <input type="text" id="lastname" name="apellidos1" class="text-lg" autofocus required />
+            <input type="text" id="lastname" name="apellidos1" class="text-lg" autofocus  />
         </div>
         <div class="inputs">
             <label class="text-xl">Usuario:</label>
-            <input type="text" id="user" name="usuarioform" class="text-lg" autofocus required/>
+            <input type="text" id="user" name="usuario1" class="text-lg" autofocus />
         </div>
         <div class="inputs">
             <label for="password" class="text-xl">Contraseña:</label>
-            <input type="password" id="password" name="contraseña1" class="text-lg" autofocus required/>
+            <input type="password" id="password" name="contraseña1" class="text-lg" autofocus/>
         </div>
         <div class="inputs">
             <label class="text-xl">Rol:</label>
@@ -178,28 +180,10 @@ const rol = await db.select().from(Roles);
             }
         });
 
-        // Manejar el envío del formulario
-        myForm3.addEventListener("submit", async (event) => {
-            event.preventDefault();
-
-            const formData = new FormData(myForm3);
-            const response = await fetch(myForm3.action, {
-                method: "POST",
-                body: formData
-            });
-
-            if (response.ok) {
-                // Cerrar el modal si la respuesta es exitosa
-                myModal3.close();
-                // Redireccionar a la página de usuarios
-                window.location.href = "/usuarios.astro";
-            } else {
-                // Manejar errores de la respuesta
-                console.error("Error al enviar el formulario:", response.statusText);
-                // Aquí puedes mostrar un mensaje de error al usuario si lo deseas
-            }
-        });
     }
+    // Manejar el envío del formulario
+   
+    
 </script>
 
 
