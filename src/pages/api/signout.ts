@@ -18,5 +18,5 @@ export async function POST(context: APIContext): Promise<Response> {
    
   );
 
-  return context.redirect("/");
+  return context.redirect("/index");
 }

@@ -19,9 +19,10 @@
 <body>
     <div class="container">
         <h1 class="text-9xl mb-3">Iniciar sesión</h1>
-        <form id="loginForm" class="form" method="POST" action="./api/signin.ts">
-            <input type="text" class="inputText" name="usuario" placeholder="Usuario" id="usuario" autofocus>
-            <input type="password" class="inputText"name="contraseña" placeholder="Contraseña" id="contraseña">
+        <p id="warnings" class="text-red-600" >{}</p>
+        <form id="loginForm" class="form" method="POST" action="./api/signin">
+            <input type="text" class="inputText" name="usuario" placeholder="Usuario" id="usuario" autofocus required>
+            <input type="password" class="inputText"name="contraseña" placeholder="Contraseña" id="contraseña" required>
             <button type="submit" class="boton" id="submitBtn">Iniciar sesión</button>
         </form>
     </div>

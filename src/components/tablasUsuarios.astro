@@ -16,7 +16,7 @@ const user = await db.select()
 <table class="table">
   <thead>
     <tr>
-      <th id="usuarioId" style="font-weight: 600; font-size: larger;">Id</th>
+      
       <th id="nombre" style="font-weight: 600; font-size: larger;">Nombre</th>
       <th id="apellidos" style="font-weight: 600; font-size: larger;">Apellidos</th>
       <th id="usuario" style="font-weight: 600; font-size: larger;">Usuario</th>
@@ -27,7 +27,7 @@ const user = await db.select()
   <tbody>
     {user.map((usuarios) => (
       <tr >
-        <td>{usuarios.usuario.id}</td>
+        
         <td>{usuarios.usuario.nombres}</td>
         <td>{usuarios.usuario.apellidos}</td>
         <td>{usuarios.usuario.user}</td>

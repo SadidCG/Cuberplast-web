@@ -30,7 +30,7 @@ const Sesiones = defineTable({
     expiresAt:column.text({optional:false})
 
   }
-})
+});
   
 const Pedidos = defineTable ({
     columns: {

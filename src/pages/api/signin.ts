@@ -1,60 +1,82 @@
-import { lucia } from "@/auth";
+
 import type { APIContext } from "astro";
-import { db, eq, usuario } from "astro:db";
+import { db, eq, usuario, Roles } from "astro:db"; // Asegúrate de importar la tabla de Roles
 import { Argon2id } from "oslo/password";
+import { lucia } from "@/auth";
 export async function POST(context: APIContext): Promise<Response> {
-  //read the form data
-  const formData = await context.request.formData();
-  const username = formData.get("usuario1");
-  const password = formData.get("contraseña1");
-  //validate the data
-  if (typeof username !== "string") {
-    return new Response("Invalid username", {
-      status: 400,
-    });
-  }
-  if (typeof password !== "string") {
-    return new Response("Invalid password", {
-      status: 400,
-    });
-  }
+  try {
+      // Leer los datos del formulario
+      const formData = await context.request.formData();
+      const username = formData.get("usuario");
+      const password = formData.get("contraseña");
 
-  //search the user
-  const foundUser = (
-    await db.select().from(usuario).where(eq(usuario.user, username))
-  ).at(0);
+      // Validar los datos
+      if (typeof username !== "string" || typeof password !== "string") {
+          return new Response("Credenciales inválidas", { status: 400 });
+      }
 
-  //if user not found
-  if (!foundUser) {
-    return new Response("Incorrect username or password", { status: 400 });
-  }
+      // Buscar al usuario
+      const foundUsers = await db.select().from(usuario).where(eq(usuario.user, username));
 
-  // verify if user has password
-  if (!foundUser.contraseña) {
-    return new Response("Invalid password", {
-      status: 400,
-    });
-  }
+      // Verificar si se encontró al menos un usuario
+      if (foundUsers.length === 0) {
+          return new Response("Usuario no encontrado", { status: 400 });
+      }
 
-  const validPassword = await new Argon2id().verify(
-    foundUser.contraseña,
-    password
-  );
+      // Tomar el primer usuario encontrado
+      const foundUser = foundUsers[0];
 
-  //If password is not valid
-  if (!validPassword) {
-    return new Response("Incorrect username or password", { status: 400 });
-  }
+      // Verificar si el usuario tiene una contraseña establecida
+      if (!foundUser.contraseña) {
+          return new Response("La contraseña no ha sido establecida", { status: 400 });
+      }
 
-  //Password is valid, user can log in
+      // Verificar si la contraseña es válida
+      const validPassword = await new Argon2id().verify(foundUser.contraseña, password);
 
-  const session = await lucia.createSession(foundUser.id, {});
-  const sessionCookie = lucia.createSessionCookie(session.id);
-  context.cookies.set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes
+      if (!validPassword) {
+          return new Response("Contraseña incorrecta", { status: 400 });
+      }
+
+      // La contraseña es válida, el usuario puede iniciar sesión
+
+      // Obtener el rol del usuario
+      const userRole = await db.select().from(Roles).where(eq(Roles.id, foundUser.rol_id));
+
+      // Verificar el rol y redirigir en consecuencia
+      if (!userRole) {
+          return new Response("Rol de usuario no encontrado", { status: 400 });
+      }
+
+      // Extraer el id de rol
+      const roleId = userRole[0].id;
+
+      // Crear una cookie de sesión para almacenar el id de usuario y el rol
+      const sessionData = { userId: foundUser.id, roleId: roleId };
+      const sessionCookie = lucia.createSessionCookie(JSON.stringify(sessionData));
+      context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+
+      // Redirigir según el id de rol
+      let redirectUrl = "";
+      if (roleId === 1) {
+          redirectUrl = "/inicioAdmin";
+          console.log(sessionData, sessionCookie);
+      } else if (roleId === 2) {
+          redirectUrl = "/inicioUsuario";
+          console.log(sessionData, sessionCookie);
+      } else {
+          return new Response("Rol no reconocido", { status: 400 });
+      }
+
+      // Reemplazar la URL actual en el historial del navegador
+      const redirectResponse = new Response(null, { status: 303, headers: { "Location": redirectUrl } });
+      redirectResponse.headers.set("Refresh", `0; url=${redirectUrl}`);
+      return redirectResponse;
+      
+
+  } catch (error) {
    
-  );
-  return context.redirect("./inicioAdmin.astro");
+      console.error("Error al procesar la solicitud:", error);
+      return new Response("Error interno del servidor", { status: 500 });
+  }
 }
