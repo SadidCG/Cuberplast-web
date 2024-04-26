@@ -26,7 +26,7 @@ const user = await db.select()
   </thead>
   <tbody>
     {user.map((usuarios) => (
-      <tr >
+      <tr data-user-id="{usuario.id}">
         
         <td>{usuarios.usuario.nombres}</td>
         <td>{usuarios.usuario.apellidos}</td>
