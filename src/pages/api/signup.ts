@@ -47,9 +47,7 @@ export async function POST(context: APIContext): Promise<Response> {
 
         console.log(nombres1, apellidos1, usuario1, contraseña1, rolId);
 
-        const session = await lucia.createSession(userId, {});
-        const sessionCookie = lucia.createSessionCookie(session.id);
-        context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+        
 
         // Redireccionar al usuario a la página de usuarios.astro
         return new Response(null, { status: 303, headers: { "Location": "/usuarios"} });

@@ -1,97 +1,121 @@
 ---
 
-
-
-
-
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+    </head>
 
-    <title>Login</title>
-</head>
+    <body>
+        <div class="container">
+            <h1 class="text-9xl mb-3">Iniciar sesión</h1>
+            <p id="warnings" class="text-red-600">{}</p>
+            <form
+                id="loginForm"
+                class="form"
+                method="POST"
+                action="./api/signin"
+            >
+                <input
+                    type="text"
+                    class="inputText"
+                    name="usuario"
+                    placeholder="Usuario"
+                    id="usuario"
+                    autofocus
+                    required
+                />
+                <input
+                    type="password"
+                    class="inputText"
+                    name="contraseña"
+                    placeholder="Contraseña"
+                    id="contraseña"
+                    required
+                />
+                <button type="submit" class="boton" id="submitBtn"
+                    >Iniciar sesión</button
+                >
+            </form>
+        </div>
 
-<body>
-    <div class="container">
-        <h1 class="text-9xl mb-3">Iniciar sesión</h1>
-        <p id="warnings" class="text-red-600" >{}</p>
-        <form id="loginForm" class="form" method="POST" action="./api/signin">
-            <input type="text" class="inputText" name="usuario" placeholder="Usuario" id="usuario" autofocus required>
-            <input type="password" class="inputText"name="contraseña" placeholder="Contraseña" id="contraseña" required>
-            <button type="submit" class="boton" id="submitBtn">Iniciar sesión</button>
-        </form>
-    </div>
+        <style>
+            /*colores: #191A25,#9A0000,#3F3E3B,#8D8979,#D9D9DC*/
 
-    <style>
-        /*colores: #191A25,#9A0000,#3F3E3B,#8D8979,#D9D9DC*/
+            body {
+                font-family: Arial;
+                background: url("public/img/laminas-y-tejas-en-policarbonato.jpg")
+                    no-repeat scroll 0 0;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-attachment: fixed;
+                width: auto;
+                height: 100%;
+            }
 
-        body {
-            font-family: Arial;
-            background: url('public/img/laminas-y-tejas-en-policarbonato.jpg') no-repeat scroll 0 0;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            width: auto;
-            height: 100%;
-        }
+            .container {
+                width: 300px;
+                margin: 100px auto;
+                text-align: center;
+                margin-top: 200px;
+            }
 
-        .container {
-            width: 300px;
-            margin: 100px auto;
-            text-align: center;
-            margin-top: 200px;
-        }
+            .inputText {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 9px;
+                box-sizing: border-box;
+            }
 
-        .inputText {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 9px;
-            box-sizing: border-box;
-        }
+            .inputText:focus {
+                outline: none;
+                border-color: #9a0000;
+                /* Cambiar el color del borde cuando está enfocado */
+            }
 
-        .inputText:focus {
-            outline: none;
-            border-color: #9A0000;
-            /* Cambiar el color del borde cuando está enfocado */
-        }
+            .boton {
+                width: 100%;
+                padding: 10px;
+                background: linear-gradient(to bottom right, #ff191d, #9a0000);
+                color: #fff;
+                border: none;
+                border-radius: 9px;
+                cursor: pointer;
+                transition: all 200ms;
+            }
 
-        .boton {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(to bottom right, #ff191d, #9A0000);
-            color: #fff;
-            border: none;
-            border-radius: 9px;
-            cursor: pointer;
-            transition: all 200ms;
-        }
+            .boton:hover {
+                border: 1px solid #ffffff;
+                color: #ffffff;
+                background: none;
+                box-shadow:
+                    0 0 10px rgba(255, 255, 255, 1),
+                    0 0 10px rgba(255, 255, 255, 1),
+                    0 0 10px rgba(255, 255, 255, 1);
+                transition: all 300ms;
+            }
 
-        .boton:hover {
-            border: 1px solid #ffffff;
-            color: #ffffff;
-            background: none;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 10px rgba(255, 255, 255, 1), 0 0 10px rgba(255, 255, 255, 1);
-            transition: all 300ms;
-        }
+            h1 {
+                color: #fff;
+                text-shadow:
+                    0 0 10px rgba(255, 255, 255, 1),
+                    0 0 3px rgba(255, 255, 255, 1),
+                    0 0 4px rgb(80, 80, 80);
+                font-size: 40px;
+            }
+        </style>
 
-        h1 {
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 3px rgba(255, 255, 255, 1), 0 0 4px rgb(80, 80, 80);
-            font-size: 40px;
-        }
-    </style>
-
-    <script>
-     
-    </script>
-</body>
-
+        <script>
+            // En el lugar donde cierras sesión, después de recibir la respuesta del servidor
+            window.history.pushState(null, "", "/");
+        </script>
+    </body>
 </html>

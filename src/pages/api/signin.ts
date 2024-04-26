@@ -20,7 +20,7 @@ export async function POST(context: APIContext): Promise<Response> {
 
       // Verificar si se encontró al menos un usuario
       if (foundUsers.length === 0) {
-          return new Response("Usuario no encontrado", { status: 400 });
+          return new Response("El usuario ingresado no existe", { status: 400 });
       }
 
       // Tomar el primer usuario encontrado
@@ -52,18 +52,19 @@ export async function POST(context: APIContext): Promise<Response> {
       const roleId = userRole[0].id;
 
       // Crear una cookie de sesión para almacenar el id de usuario y el rol
-      const sessionData = { userId: foundUser.id, roleId: roleId };
-      const sessionCookie = lucia.createSessionCookie(JSON.stringify(sessionData));
+      
+      const session = await lucia.createSession(foundUser.id,{})
+        const sessionCookie = lucia.createSessionCookie(session.id);
       context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
       // Redirigir según el id de rol
       let redirectUrl = "";
       if (roleId === 1) {
           redirectUrl = "/inicioAdmin";
-          console.log(sessionData, sessionCookie);
+          
       } else if (roleId === 2) {
           redirectUrl = "/inicioUsuario";
-          console.log(sessionData, sessionCookie);
+          
       } else {
           return new Response("Rol no reconocido", { status: 400 });
       }

@@ -15,8 +15,13 @@ export async function POST(context: APIContext): Promise<Response> {
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes
-   
   );
 
-  return context.redirect("/index");
+  // Redirigir al usuario a la página de inicio
+  return new Response(null, {
+    status: 302,
+    headers: {
+      "Location": "/"
+    }
+  });
 }
