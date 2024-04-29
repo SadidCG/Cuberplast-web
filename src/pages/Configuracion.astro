@@ -1,0 +1,21 @@
+---
+import Navbar from "../components/navbar.astro";
+import Titulo from "../components/titulo.astro";
+import Layout from "../layouts/LayoutUsuario.astro";
+import Cofig from "../components/configuracion.astro";
+---
+<Layout title="Configuración Usuario">
+  <Navbar />
+  <Titulo title="Configuración usuario" />
+  <div class="form">
+  <Cofig/>
+  <div/>
+</Layout>
+
+<style>
+  .form{
+    margin-top: 60px;
+    margin-left: 44%;
+    
+  }
+</style>

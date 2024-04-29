@@ -1,5 +1,6 @@
 ---
-
+const user = Astro.locals.user;
+console.log(user);
 ---
 
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
@@ -42,6 +43,9 @@
             <a href="./configUsuario" class="text-white ml-4 font-bold-lg pr-40 py-2">
                 Configuración de usuario</a
             >
+        </li>
+        <li class="opcion  mt-2">
+            {user && <form method="post" action="./api/signout"><button class="text-white ml-4 font-bold-lg pr-40 py-2">Cerrar sesión</button></form>}
         </li>
     </ul>
 </nav>

@@ -1,33 +1,11 @@
 ---
 import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
 import Buton1 from "./buton1.astro";
-import { db, localidades, Pedidos } from "astro:db";
+import { db, localidades} from "astro:db";
+
+
+
 const loc = await db.select().from(localidades);
-if (Astro.request.method == "POST") {
-    const formData = await Astro.request.formData();
-    const producto = formData.get("producto");
-    const cantidad = formData.get("cantidad"); // Parseamos a entero
-    const direccion = formData.get("direccion");
-    const destino = formData.get("destino");
-    const localidad = formData.get("localidad"); // Parseamos a entero
-
-    if (
-        typeof producto === "string" &&
-        typeof cantidad === "string" &&
-        typeof direccion === "string" &&
-        typeof destino === "string" &&
-        typeof localidad === "string"
-    ) {
-        await db.insert(Pedidos).values({
-            nombre_producto: producto,
-            cantidad: cantidad,
-            direccion: direccion,
-            destino: destino,
-            localidad: localidad,
-        }).run();
-    }
-}
-
 
 ---
 
@@ -61,7 +39,7 @@ if (Astro.request.method == "POST") {
                 fill-rule="evenodd"></path></svg
         >
     </button>
-    <form id="myForm2" class="Form" method="post">
+    <form id="myForm2" class="Form" method="post" action="./api/seguimientos">
         <h1 class="titulo text-4xl">Crear Seguimiento</h1>
         <div class="inputs">
             <label class="text-xl">Producto:</label>
@@ -88,7 +66,7 @@ if (Astro.request.method == "POST") {
             <input
                 type="text"
                 id="hora2"
-                name="direccion"
+                name="direccion1"
                 class="text-lg"
                 autofocus
             />
@@ -98,7 +76,7 @@ if (Astro.request.method == "POST") {
             <input
                 type="text"
                 id="hora3"
-                name="destino"
+                name="destino1"
                 class="text-lg"
                 autofocus
             />

@@ -34,7 +34,7 @@ const Sesiones = defineTable({
   
 const Pedidos = defineTable ({
     columns: {
-        id: column.number({ primaryKey: true }),
+        id: column.text({ primaryKey: true }),
         nombre_producto: column.text(),
         cantidad: column.number(),
         destino: column.text(),
