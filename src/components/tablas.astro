@@ -1,16 +1,15 @@
 ---
-
 import Butonborrcanc from "./buttons/botonesBorr-canc.astro";
-import { db, Pedidos, localidades } from 'astro:db'
+import { db, Pedidos, localidades } from "astro:db";
 import { eq } from "astro:db";
 
 // Obtener los pedidos con el nombre de la localidad
-const pedido = await db.select()
-    .from(Pedidos)
-    .innerJoin(localidades, eq(Pedidos.localidad_id, localidades.id));
-
-
+const pedido = await db
+  .select()
+  .from(Pedidos)
+  .innerJoin(localidades, eq(Pedidos.localidad_id, localidades.id));
 ---
+
 <table class="table">
   <thead>
     <tr>
@@ -24,24 +23,26 @@ const pedido = await db.select()
     </tr>
   </thead>
   <tbody>
-    {pedido.map((pedido) => (
-      <tr >
-        <td>{pedido.Pedidos.nombre_producto}</td>
-        <td>{pedido.Pedidos.cantidad}</td>
-        <td>{pedido.Pedidos.direccion}</td>
-        <td>{pedido.Pedidos.destino}</td>
-        <td>{pedido.localidades.nombre_localidad}</td>
-        <td>{pedido.Pedidos.fecha}</td>
-        <td>
-          <a class="btnEditar" href="../VistasSecundarias/verDetalles">
-            Actualizar
-          </a>
-          <button type="button" class="btnBorrar" id="openModalBtn1">
-            Eliminar
-          </button>
-        </td>
-      </tr>
-    ))}
+    {
+      pedido.map((pedido) => (
+        <tr>
+          <td>{pedido.Pedidos.nombre_producto}</td>
+          <td>{pedido.Pedidos.cantidad}</td>
+          <td>{pedido.Pedidos.direccion}</td>
+          <td>{pedido.Pedidos.destino}</td>
+          <td>{pedido.localidades.nombre_localidad}</td>
+          <td>{pedido.Pedidos.fecha}</td>
+          <td>
+            <a class="btnEditar" href="../VistasSecundarias/verDetalles">
+              Actualizar
+            </a>
+            <button type="button" class="btnBorrar" id="openModalBtn1">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      ))
+    }
   </tbody>
 </table>
 
@@ -127,6 +128,7 @@ const pedido = await db.select()
     border: 1px solid rgb(30 58 138);
     padding: 6.9px;
     border-radius: 3px;
+    margin-right: 7px;
     cursor: pointer;
     text-decoration: none;
     transition: all 200ms;
