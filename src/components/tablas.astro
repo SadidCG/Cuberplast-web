@@ -158,41 +158,36 @@ const pedido = await db
   }
 </style>
 <script>
-  // TypeScript
-  const openModalBtn: HTMLButtonElement | null = document.getElementById(
-    "openModalBtn1",
-  ) as HTMLButtonElement;
-  const myModal: HTMLDialogElement | null = document.getElementById(
-    "myModal",
-  ) as HTMLDialogElement;
-  const myForm: HTMLFormElement | null = document.getElementById(
-    "myForm",
-  ) as HTMLFormElement;
-  const closeButton: HTMLButtonElement | null = document.getElementById(
-    "close-dialog",
-  ) as HTMLButtonElement;
+  const openModalBtns1: NodeListOf<HTMLButtonElement> | null = document.querySelectorAll(".btnBorrar");
+const myModal: HTMLDialogElement | null = document.getElementById("myModal") as HTMLDialogElement;
+const myForm: HTMLFormElement | null = document.getElementById("myForm") as HTMLFormElement;
+const closeButton: HTMLButtonElement | null = document.getElementById("close-dialog") as HTMLButtonElement;
 
-  if (openModalBtn && myModal && myForm && closeButton) {
-    openModalBtn.addEventListener("click", () => {
+if (openModalBtns1 && myModal && myForm && closeButton) {
+  openModalBtns1.forEach((btn) => {
+    btn.addEventListener("click", () => {
       myModal.showModal();
     });
+  });
 
-    closeButton.addEventListener("click", () => {
+  closeButton.addEventListener("click", () => {
+    myModal.close();
+  });
+
+  // Cerrar el modal cuando se hace clic fuera de él
+  myModal.addEventListener("click", (event) => {
+    if (event.target === myModal) {
       myModal.close();
-    });
+    }
+  });
 
-    // Cerrar el modal cuando se hace clic fuera de él
-    myModal.addEventListener("click", (event) => {
-      if (event.target === myModal) {
-        myModal.close();
-      }
-    });
+  // Cerrar el modal cuando se presiona la tecla Esc
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && myModal.open) {
+      myModal.close();
+    }
+  });
+}
 
-    // Cerrar el modal cuando se presiona la tecla Esc
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && myModal.open) {
-        myModal.close();
-      }
-    });
-  }
+// app.js (o donde estés manejando la lógica del cliente)
 </script>
