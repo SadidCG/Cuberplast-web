@@ -91,12 +91,12 @@ const user = await db
 
 <!--*************************************************************************************************-->
 <dialog
-  id="myModal4"
+  id="myModal1"
   class="modal items-center justify-center bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
 >
   <button
     type="button"
-    id="close-dialog4"
+    id="close-dialog1"
     class="close-dialog fixed right-1/4 top-20 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
   >
     <!--?xml version="1.0" ?-->
@@ -113,7 +113,7 @@ const user = await db
         fill-rule="evenodd"></path></svg
     >
   </button>
-  <form id="myForm4" class="Form">
+  <form id="myForm1" class="Form">
     <h1 class="titulo text-4xl">Editar usuario</h1>
     <div class="inputs">
       <label class="text-xl">Nombres:</label>
@@ -147,7 +147,7 @@ const user = await db
     <div class="inputs">
       <label for="password" class="text-xl">Rol:</label>
       <input
-        type="password"
+        type="text"
         id="password"
         name="contraseña1"
         class="text-lg"
@@ -165,6 +165,91 @@ const user = await db
   </form>
 </dialog>
 
+
+<script>
+
+const openModalBtns4: NodeListOf<HTMLButtonElement> | null =
+    document.querySelectorAll(".btnEditar");
+  const myModal4: HTMLDialogElement | null = document.getElementById(
+    "myModal1",
+  ) as HTMLDialogElement;
+  const myForm4: HTMLFormElement | null = document.getElementById(
+    "myForm1",
+  ) as HTMLFormElement;
+  const closeButton4: HTMLButtonElement | null = document.getElementById(
+    "close-dialog1",
+  ) as HTMLButtonElement;
+
+  if (openModalBtns4 && myModal4 && myForm4 && closeButton4) {
+    openModalBtns4.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        myModal4.showModal();
+      });
+    });
+
+    closeButton4.addEventListener("click", () => {
+      myModal4.close();
+    });
+
+    // Cerrar el modal cuando se hace clic fuera de él
+    myModal4.addEventListener("click", (event) => {
+      if (event.target === myModal4) {
+        myModal4.close();
+      }
+    });
+
+    // Cerrar el modal cuando se presiona la tecla Esc
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && myModal4.open) {
+        myModal4.close();
+      }
+    });
+  }
+
+
+
+
+
+  // TypeScript
+  const openModalBtns1: NodeListOf<HTMLButtonElement> | null =
+    document.querySelectorAll(".btnBorrar");
+  const myModal: HTMLDialogElement | null = document.getElementById(
+    "myModal",
+  ) as HTMLDialogElement;
+  const myForm: HTMLFormElement | null = document.getElementById(
+    "myForm",
+  ) as HTMLFormElement;
+  const closeButton: HTMLButtonElement | null = document.getElementById(
+    "close-dialog",
+  ) as HTMLButtonElement;
+
+  if (openModalBtns1 && myModal && myForm && closeButton) {
+    openModalBtns1.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        myModal.showModal();
+      });
+    });
+
+    closeButton.addEventListener("click", () => {
+      myModal.close();
+    });
+
+    // Cerrar el modal cuando se hace clic fuera de él
+    myModal.addEventListener("click", (event) => {
+      if (event.target === myModal) {
+        myModal.close();
+      }
+    });
+
+    // Cerrar el modal cuando se presiona la tecla Esc
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && myModal.open) {
+        myModal.close();
+      }
+    });
+  }
+
+</script>
 <style>
   .Form {
     width: 560px;
@@ -342,87 +427,3 @@ const user = await db
   
 }
 </style>
-<script>
-
-const openModalBtns4: NodeListOf<HTMLButtonElement> | null =
-    document.querySelectorAll(".btnEditar");
-  const myModal4: HTMLDialogElement | null = document.getElementById(
-    "myModal4",
-  ) as HTMLDialogElement;
-  const myForm4: HTMLFormElement | null = document.getElementById(
-    "myForm4",
-  ) as HTMLFormElement;
-  const closeButton4: HTMLButtonElement | null = document.getElementById(
-    "close-dialog4",
-  ) as HTMLButtonElement;
-
-  if (openModalBtns4 && myModal4 && myForm4 && closeButton4) {
-    openModalBtns4.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        myModal4.showModal();
-      });
-    });
-
-    closeButton4.addEventListener("click", () => {
-      myModal4.close();
-    });
-
-    // Cerrar el modal cuando se hace clic fuera de él
-    myModal4.addEventListener("click", (event) => {
-      if (event.target === myModal4) {
-        myModal4.close();
-      }
-    });
-
-    // Cerrar el modal cuando se presiona la tecla Esc
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && myModal4.open) {
-        myModal4.close();
-      }
-    });
-  }
-  // TypeScript
-  const openModalBtns1: NodeListOf<HTMLButtonElement> | null =
-    document.querySelectorAll(".btnBorrar");
-  const myModal: HTMLDialogElement | null = document.getElementById(
-    "myModal",
-  ) as HTMLDialogElement;
-  const myForm: HTMLFormElement | null = document.getElementById(
-    "myForm",
-  ) as HTMLFormElement;
-  const closeButton: HTMLButtonElement | null = document.getElementById(
-    "close-dialog",
-  ) as HTMLButtonElement;
-
-  if (openModalBtns1 && myModal && myForm && closeButton) {
-    openModalBtns1.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        myModal.showModal();
-      });
-    });
-
-    closeButton.addEventListener("click", () => {
-      myModal.close();
-    });
-
-    // Cerrar el modal cuando se hace clic fuera de él
-    myModal.addEventListener("click", (event) => {
-      if (event.target === myModal) {
-        myModal.close();
-      }
-    });
-
-    // Cerrar el modal cuando se presiona la tecla Esc
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && myModal.open) {
-        myModal.close();
-      }
-    });
-  }
-
-  // app.js (o donde estés manejando la lógica del cliente)
-
-  // TypeScript
-  
-  // Manejar el envío del formulario
-</script>
