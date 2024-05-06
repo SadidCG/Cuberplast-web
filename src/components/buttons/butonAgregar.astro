@@ -1,0 +1,189 @@
+---
+import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
+import Buton1 from "./buton1.astro";
+
+import {db, Roles, } from "astro:db"
+
+
+
+
+const rol = await db.select().from(Roles);
+
+
+---
+
+<!-- HTML -->
+<div class="container">
+    <button id="openModalBtn3" class="btn size-12 bg-blue-900">
+        <AgregarIcon />
+    </button>
+</div>
+
+<dialog
+    id="myModal3"
+    class="modal items-center justify-center bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
+>
+    <button
+        type="button"
+        id="close-dialog3"
+        class="close-dialog fixed right-1/4 top-20 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
+    >
+        <!--?xml version="1.0" ?-->
+        <svg
+            fill="none"
+            height="30"
+            viewBox="0 0 20 20"
+            width="30"
+            xmlns="http://www.w3.org/2000/svg"
+            ><path
+                clip-rule="evenodd"
+                d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z"
+                fill="#fff"
+                fill-rule="evenodd"></path></svg
+        >
+    </button>
+    <form id="myForm3" class="Form"  method="post" action="./api/signup" >
+        <h1 class="titulo text-4xl">Crear usuario</h1>
+        <div class="inputs">
+            <label class="text-xl">Nombres:</label>
+            <input type="text" id="name" name="nombres1" class="text-lg" autofocus/>
+        </div>
+        <div class="inputs">
+            <label class="text-xl">Apellidos:</label>
+            <input type="text" id="lastname" name="apellidos1" class="text-lg" autofocus  />
+        </div>
+        <div class="inputs">
+            <label class="text-xl">Usuario:</label>
+            <input type="text" id="user" name="usuario1" class="text-lg" autofocus />
+        </div>
+        <div class="inputs">
+            <label for="password" class="text-xl">Contraseña:</label>
+            <input type="password" id="password" name="contraseña1" class="text-lg" autofocus/>
+        </div>
+        <div class="inputs">
+            <label class="text-xl">Rol:</label>
+            <select id="role" name="rol1" class="form-select text-lg"  >
+            
+                {
+                    rol.map(Roles =>(<option value={Roles.id}>{Roles.rol_label}</option>))
+                }
+            </select>
+            
+        </div>
+
+        <div class="flex mt-8 ml-12">
+            <Buton1 value="Crear" id="crear" />
+        </div>
+    </form>
+</dialog>
+
+<style>
+     .Buton1 {
+        margin-left: 10px;
+    }
+    .container {
+        position: fixed;
+        top: 85%;
+        left: 94%;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        transition: 0.6s;
+        width: 50px;
+        height: 50px;
+        border: none;
+        outline: none;
+    }
+
+    .btn:hover {
+        transform: scale(1.1);
+    }
+    .Form {
+        width: 560px;
+        align-items: center;
+        border-radius: 15px;
+        padding: 30px;
+        background-color: rgb(255, 255, 255);
+    }
+    .titulo {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .inputs {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .inputs label {
+        flex: 0 0 150px; /* Ancho fijo para las etiquetas */
+    }
+
+    .inputs input,
+    .inputs select {
+        flex: 1; /* El input y select toma el espacio restante */
+        border: 1px solid gray;
+        border-radius: 5px;
+        outline: none;
+        padding: 5px;
+    }
+
+    select {
+        border: 1px solid gray;
+        border-radius: 5px;
+        outline: none;
+        padding: 5px;
+    ng: 5px;
+    }
+</style>
+
+<script>
+    // TypeScript
+    const openModalBtn3: HTMLButtonElement | null = document.getElementById(
+        "openModalBtn3",
+    ) as HTMLButtonElement;
+    const myModal3: HTMLDialogElement | null = document.getElementById(
+        "myModal3",
+    ) as HTMLDialogElement;
+    const myForm3: HTMLFormElement | null = document.getElementById(
+        "myForm3",
+    ) as HTMLFormElement;
+    const closeButton3: HTMLButtonElement | null = document.getElementById(
+        "close-dialog3",
+    ) as HTMLButtonElement;
+
+    if (openModalBtn3 && myModal3 && myForm3 && closeButton3) {
+        openModalBtn3.addEventListener("click", () => {
+            myModal3.showModal();
+        });
+
+        closeButton3.addEventListener("click", () => {
+            myModal3.close();
+        });
+
+        // Cerrar el modal cuando se hace clic fuera de él
+        myModal3.addEventListener("click", (event) => {
+            if (event.target === myModal3) {
+                myModal3.close();
+            }
+        });
+
+        // Cerrar el modal cuando se presiona la tecla Esc
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && myModal3.open) {
+                myModal3.close();
+            }
+        });
+
+    }
+    // Manejar el envío del formulario
+   
+    
+</script>
+
+

@@ -1,0 +1,16 @@
+{
+
+
+
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "preact",
+    "baseUrl": ".",
+    "paths": {
+      "@/*":[
+        "./src/*"
+      ]
+    }
+  }
+}

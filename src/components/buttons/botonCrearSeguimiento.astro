@@ -1,0 +1,216 @@
+---
+import AgregarIcon from "../../../public/icons/agrgarIcon.astro";
+import Buton1 from "./buton1.astro";
+import { db, localidades} from "astro:db";
+
+
+
+const loc = await db.select().from(localidades);
+
+---
+
+<!-- HTML -->
+<div class="container">
+    <button id="openModalBtn" class="btn size-12 bg-blue-900">
+        <AgregarIcon />
+    </button>
+</div>
+
+<dialog
+    id="myModal2"
+    class="modal items-center justify-center bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
+>
+    <button
+        type="button"
+        id="close-dialog2"
+        class="close-dialog fixed right-1/4 top-20 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
+    >
+        <!--?xml version="1.0" ?-->
+        <svg
+            fill="none"
+            height="30"
+            viewBox="0 0 20 20"
+            width="30"
+            xmlns="http://www.w3.org/2000/svg"
+            ><path
+                clip-rule="evenodd"
+                d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z"
+                fill="#fff"
+                fill-rule="evenodd"></path></svg
+        >
+    </button>
+    <form id="myForm2" class="Form" method="post" action="./api/seguimientos">
+        <h1 class="titulo text-4xl">Crear Seguimiento</h1>
+        <div class="inputs">
+            <label class="text-xl">Producto:</label>
+            <input
+                type="text"
+                id="hora1"
+                name="producto"
+                class="text-lg"
+                autofocus
+            />
+        </div>
+        <div class="inputs">
+            <label class="text-xl">Cantidad:</label>
+            <input
+                type="number"
+                id="hora1"
+                name="cantidad"
+                class="text-lg"
+                autofocus
+            />
+        </div>
+        <div class="inputs">
+            <label class="text-xl">Dirección:</label>
+            <input
+                type="text"
+                id="hora2"
+                name="direccion1"
+                class="text-lg"
+                autofocus
+            />
+        </div>
+        <div class="inputs">
+            <label class="text-xl">Destino:</label>
+            <input
+                type="text"
+                id="hora3"
+                name="destino1"
+                class="text-lg"
+                autofocus
+            />
+        </div>
+        <div class="inputs">
+            <label class="text-xl">Hora de creación:</label>
+            <input
+                type="date"
+                id="hora3"
+                name="fecha1"
+                class="text-lg"
+                autofocus
+            />
+        </div>
+
+        <div class="inputs">
+            <label class="form-label text-xl">Localidad:</label>
+            <select id="localidad" class="form-select text-lg" name="localidad">
+                {
+                    loc.map((localidades) => (
+                        <option value={localidades.id}>
+                            {localidades.nombre_localidad}
+                        </option>
+                    ))
+                }
+            </select>
+        </div>
+
+        <div class="flex mt-8 ml-12">
+            <Buton1 value="Crear" id="crear" />
+        </div>
+    </form>
+</dialog>
+
+<style>
+    .Buton1 {
+        margin-left: 10px;
+    }
+    .container {
+        position: fixed;
+        top: 85%;
+        left: 94%;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        transition: 0.6s;
+        width: 50px;
+        height: 50px;
+        border: none;
+        outline: none;
+    }
+
+    .btn:hover {
+        transform: scale(1.1);
+    }
+    .Form {
+        width: 560px;
+        align-items: center;
+        border-radius: 15px;
+        padding: 30px;
+        background-color: rgb(255, 255, 255);
+    }
+    .titulo {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .inputs {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .inputs label {
+        flex: 0 0 150px; /* Ancho fijo para las etiquetas */
+    }
+
+    .inputs input,
+    .inputs select {
+        flex: 1; /* El input y select toma el espacio restante */
+        border: 1px solid gray;
+        border-radius: 5px;
+        outline: none;
+        padding: 5px;
+    }
+
+    select {
+        border: 1px solid gray;
+        border-radius: 5px;
+        outline: none;
+        padding: 5px;
+    }
+</style>
+
+<script>
+    // TypeScript
+    const openModalBtn: HTMLButtonElement | null = document.getElementById(
+        "openModalBtn",
+    ) as HTMLButtonElement;
+    const myModal2: HTMLDialogElement | null = document.getElementById(
+        "myModal2",
+    ) as HTMLDialogElement;
+    const myForm2: HTMLFormElement | null = document.getElementById(
+        "myForm2",
+    ) as HTMLFormElement;
+    const closeButton: HTMLButtonElement | null = document.getElementById(
+        "close-dialog2",
+    ) as HTMLButtonElement;
+
+    if (openModalBtn && myModal2 && myForm2 && closeButton) {
+        openModalBtn.addEventListener("click", () => {
+            myModal2.showModal();
+        });
+
+        closeButton.addEventListener("click", () => {
+            myModal2.close();
+        });
+
+        // Cerrar el modal cuando se hace clic fuera de él
+        myModal2.addEventListener("click", (event) => {
+            if (event.target === myModal2) {
+                myModal2.close();
+            }
+        });
+
+        // Cerrar el modal cuando se presiona la tecla Esc
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && myModal2.open) {
+                myModal2.close();
+            }
+        });
+    }
+</script>

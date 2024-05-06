@@ -1,0 +1,70 @@
+---
+const user = Astro.locals.user;
+console.log(user);
+---
+
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+
+<nav class="bg-blue-900 w-56 min-h-screen flex-col fixed shadow-2xl">
+    <ul>
+        <img
+            src="public/img/Logo-Web-ppal-Blanco.png"
+            alt="logo de navbar lateral"
+            class="py-4 w-52"
+        />
+
+        <li class="opcion mt-5">
+            <a
+                href="./inicioUsuario"
+                class="text-white ml-4 font-bold-lg pr-40 py-2"
+            >
+                Inicio
+            </a>
+        </li>
+        <li class="opcion mt-10">
+            <a
+                href="./seguimientosUsuario"
+                class="text-white ml-4 font-bold-lg pr-40 py-2"
+            >
+                Seguimientos
+            </a>
+        </li>
+        <li class="opcion mt-10">
+            <a
+                href="./localidadesUsuario"
+                class="text-white ml-4 font-bold-lg pr-40 py-2"
+            >
+                Localidades</a
+            >
+        </li>
+        <div class="separador"></div>
+
+        <li class="opcion mt-16">
+            <a href="./configUsuario" class="text-white ml-4 font-bold-lg pr-40 py-2">
+                Configuración de usuario</a
+            >
+        </li>
+        <li class="opcion  mt-2">
+            {user && <form method="post" action="./api/signout"><button class="text-white ml-4 font-bold-lg pr-40 py-2">Cerrar sesión</button></form>}
+        </li>
+    </ul>
+</nav>
+
+<style>
+    .opcion {
+        background-color: rgb(30 58 138);
+        padding-right: 160px;
+        display: flex;
+        cursor: pointer;
+        transition: all 200ms;
+    }
+    .opcion:hover {
+        background-color: rgb(14, 210, 245);
+    }
+    .separador {
+        margin-top: 50px;
+        border-bottom: 1px solid #fff;
+        width: 197px;
+        margin-left: 10px;
+    }
+</style>
