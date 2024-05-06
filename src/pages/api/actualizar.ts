@@ -1,17 +1,20 @@
-import type { APIContext } from "astro";
+// importa los módulos necesarios
 import { Argon2id } from "oslo/password";
-import { db, usuario } from 'astro:db';
+import { db, usuario, Roles } from "astro:db";
+import type { APIContext } from "astro";
 
+// función para generar la respuesta
 async function generateResponse(message: string, statusCode: number = 200): Promise<Response> {
     const backButton = `<button onclick="window.history.back();">Regresar</button>`;
     const responseText = `${message}<br>${backButton}`;
     return new Response(responseText, { status: statusCode, headers: { "Content-Type": "text/html" } });
 }
 
+// función para manejar la petición PUT
 export async function PUT(context: APIContext): Promise<Response> {
     try {
         const formData = await context.request.formData();
-        const userId = formData.get("id")?.toString() || ""; // Obtener el ID del usuario a actualizar
+        const userId = formData.get("id")?.toString() || "";
         const nombres1 = formData.get("nombres1")?.toString() || "";
         const apellidos1 = formData.get("apellidos1")?.toString() || "";
         const usuario1 = formData.get("usuario1")?.toString() || "";
@@ -52,7 +55,6 @@ export async function PUT(context: APIContext): Promise<Response> {
             rol_id: rolId
         }).where({ id: userId }).run();
 
-        // Redireccionar al usuario a la página de usuarios.astro
         return new Response(null, { status: 303, headers: { "Location": "/usuarios" } });
     } catch (error) {
         console.error("Error al procesar el formulario:", error);
