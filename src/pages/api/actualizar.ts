@@ -1,6 +1,6 @@
 // importa los módulos necesarios
 import { Argon2id } from "oslo/password";
-import { db, usuario, Roles } from "astro:db";
+import { db, usuario, Roles } from "astro:db"; // Aquí estás importando "usuario" pero podría ser que no esté definido
 import type { APIContext } from "astro";
 
 // función para generar la respuesta
@@ -47,7 +47,7 @@ export async function PUT(context: APIContext): Promise<Response> {
 
         const hashedContraseña = await new Argon2id().hash(contraseña1);
 
-        await db.update(usuario).set({
+        await db.update(usuario).set({ // Aquí estás usando "usuario", asegúrate de que está definido
             nombres: nombres1,
             apellidos: apellidos1,
             user: usuario1,

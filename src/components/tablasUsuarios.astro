@@ -1,31 +1,42 @@
 ---
 import Butonborrcanc from "./buttons/botonesBorr-canc.astro";
-
 import { db, usuario, Roles } from "astro:db";
 import { eq } from "astro:db";
 
-export async function obtenerUsuarios() {
-  const usuarios = await db
-    .select()
-    .from(usuario)
-    .innerJoin(Roles, eq(usuario.rol_id, Roles.id))
-    .all();
-
-  return usuarios;
-}
-
-export async function obtenerRoles() {
-  const roles = await db
-    .select()
-    .from(Roles)
-    .all();
-  
-  return roles;
-}
 ---
 
-<astro:head>
+
   <script type="module">
+
+
+
+    async function obtenerUsuarios() {
+      try {
+        const users = await db
+          .select()
+          .from(usuario)
+          .innerJoin(Roles, eq(usuario.rol_id, Roles.id))
+          .all();
+
+        return users;
+      } catch (error) {
+        throw new Error("Error al obtener los usuarios de la base de datos: " + error.message);
+      }
+    }
+
+    async function obtenerRoles() {
+      try {
+        const roles = await db
+          .select()
+          .from(Roles)
+          .all();
+        
+        return roles;
+      } catch (error) {
+        throw new Error("Error al obtener los roles de la base de datos: " + error.message);
+      }
+    }
+
     async function actualizarUsuario(event) {
       event.preventDefault();
       
@@ -34,7 +45,7 @@ export async function obtenerRoles() {
       const userId = formData.get("id");
 
       try {
-        const response = await fetch("./api/actualizar", { // Cambio en la ruta de la API
+        const response = await fetch("./api/actualizar", {
           method: "PUT",
           body: formData
         });
@@ -51,14 +62,46 @@ export async function obtenerRoles() {
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
-      const editForms = document.querySelectorAll(".edit-form");
+  try {
+    // Obtener los usuarios
+    const users = await obtenerUsuarios();
+    console.log(users); // Verificar los usuarios obtenidos
 
-      editForms.forEach((form) => {
-        form.addEventListener("submit", actualizarUsuario);
-      });
+    // Encontrar el tbody
+    const tbody = document.querySelector("tbody");
+    console.log(tbody); // Verificar si tbody está siendo seleccionado correctamente
+
+    // Verificar si tbody existe
+    if (tbody) {
+      // Poblar la tabla con los datos de usuario
+      tbody.innerHTML = users.map(user => `
+        <tr data-user-id="${user.usuario.id}">
+          <td>${user.usuario.nombres}</td>
+          <td>${user.usuario.apellidos}</td>
+          <td>${user.usuario.user}</td>
+          <td>${user.Roles.rol_label}</td>
+          <td>
+            <button class="btnEditar" type="button">Editar</button>
+            <button type="button" class="btnBorrar">Eliminar</button>
+          </td>
+        </tr>
+      `).join("");
+    } else {
+      console.error("Error: tbody no encontrado.");
+    }
+  } catch (error) {
+    console.error("Error cargando usuarios:", error);
+    alert("Error cargando usuarios. Por favor, inténtalo de nuevo más tarde.");
+  }
+});
+
+    const editForms = document.querySelectorAll(".edit-form");
+    editForms.forEach((form) => {
+      form.addEventListener("submit", actualizarUsuario);
     });
+
   </script>
-</astro:head>
+
 
 <table class="table">
   <thead>
@@ -71,22 +114,14 @@ export async function obtenerRoles() {
     </tr>
   </thead>
   <tbody>
-    {
-  user.map((usuario) => ( // Cambiado de usuarios a usuario
-    <tr data-user-id="{usuario.usuario.id}">
-      <td>{usuario.usuario.nombres}</td>
-      <td>{usuario.usuario.apellidos}</td>
-      <td>{usuario.usuario.user}</td>
-      <td>{usuario.Roles.rol_label}</td> // Sin cambios
-
-      <td>
-        <button class="btnEditar" type="button">Editar</button>
-        <button type="button" class="btnBorrar">Eliminar</button>
-      </td>
+    <!-- Use the user data here -->
+    <tr>
+      <td>Loading...</td> <!-- Placeholder for data -->
+      <td>Loading...</td> <!-- Placeholder for data -->
+      <td>Loading...</td> <!-- Placeholder for data -->
+      <td>Loading...</td> <!-- Placeholder for data -->
+      <td>Loading...</td> <!-- Placeholder for data -->
     </tr>
-  ))
-}
-
   </tbody>
 </table>
 
@@ -98,35 +133,31 @@ export async function obtenerRoles() {
   </button>
 
   <form id="myForm1" class="Form edit-form">
-    <input type="hidden" name="id" value="{usuario.usuario.id}">
+    <!-- Agregar un campo oculto para el ID del usuario -->
+    <input type="hidden" name="id" id="userId" value="">
     <h1 class="titulo text-4xl">Editar usuario</h1>
     <div class="inputs">
       <label class="text-xl">Nombres:</label>
-      <input type="text" id="name" name="nombres1" class="text-lg" autofocus value="{usuario.usuario.nombres}" />
+      <input type="text" id="name1" name="nombres1" class="text-lg" autofocus />
     </div>
     <div class="inputs">
       <label class="text-xl">Apellidos:</label>
-      <input type="text" id="lastname" name="apellidos1" class="text-lg" autofocus value="{usuario.usuario.apellidos}" />
+      <input type="text" id="lastname1" name="apellidos1" class="text-lg" autofocus />
     </div>
     <div class="inputs">
       <label class="text-xl">Usuario:</label>
-      <input type="text" id="user" name="usuario1" class="text-lg" autofocus value="{usuario.usuario.user}" />
+      <input type="text" id="user1" name="usuario1" class="text-lg" autofocus />
     </div>
     <div class="inputs">
       <label for="password" class="text-xl">Contraseña:</label>
-      <input type="password" id="password" name="contraseña1" class="text-lg" autofocus />
+      <input type="password" id="password1" name="contraseña1" class="text-lg" autofocus />
     </div>
     <div class="inputs">
       <label for="rol" class="text-xl">Rol:</label>
       <select id="rol" name="rol1" class="text-lg" autofocus>
-        {
-          roles.map((rol) => ( // Cambio en la variable de iteración
-            <option value="{rol.id}" {usuario.Roles.id === rol.id ? 'selected' : ''}>{rol.rol_label}</option> // Cambio en la variable de iteración
-          ))
-        }
+        <!-- Los roles serán agregados aquí dinámicamente -->
       </select>
     </div>
-
     <div class="mt-4">
       <button class="buton1" type="submit">Guardar</button>
       <button class="buton2" type="button">Cancelar</button>
@@ -140,7 +171,6 @@ export async function obtenerRoles() {
       <path clip-rule="evenodd" d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z" fill="#fff" fill-rule="evenodd"></path>
     </svg>
   </button>
-
   <form id="myForm" class="Form">
     <h2 class="titulo">¿Quieres eliminar a este usuario?</h2>
     <div class="flex mt-8 ml-28">
@@ -151,7 +181,7 @@ export async function obtenerRoles() {
 
 <script>
   const openModalBtns4 = document.querySelectorAll(".btnEditar");
-  const myModal4 = document.getElementById("myModal1");
+  const myModal4 = document.getElementById("myModal1") as HTMLDialogElement;
   const myForm4 = document.getElementById("myForm1");
   const closeButton4 = document.getElementById("close-dialog1");
 
@@ -180,7 +210,7 @@ export async function obtenerRoles() {
   }
 
   const openModalBtns1 = document.querySelectorAll(".btnBorrar");
-  const myModal = document.getElementById("myModal");
+  const myModal = document.getElementById("myModal") as HTMLDialogElement;
   const myForm = document.getElementById("myForm");
   const closeButton = document.getElementById("close-dialog");
 
@@ -207,145 +237,148 @@ export async function obtenerRoles() {
       }
     });
   }
+
 </script>
+<style>
+  .Form {
+    width: 560px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 30px;
+    background-color: rgb(255, 255, 255);
+  }
+  .titulo {
+    text-align: center;
+    margin-bottom: 10px;
+  }
 
+  table {
+    border-collapse: collapse;
+    font-size: 12px;
+    font-family: arial;
+    width: 80%;
+    margin-left: 250px;
+    margin-top: 30px;
+  }
 
-<style>  .Form {
-  width: 560px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px;
-  padding: 30px;
-  background-color: rgb(255, 255, 255);
-}
-.titulo {
-  text-align: center;
-  margin-bottom: 10px;
-}
+  table th {
+    text-align: left;
+    padding: 10px;
+    background: rgb(30 58 138);
+    color: #fff;
+  }
 
-table {
-  border-collapse: collapse;
-  font-size: 12px;
-  font-family: arial;
-  width: 80%;
-  margin-left: 250px;
-  margin-top: 30px;
-}
+  table tr:nth-child(odd) {
+    background: #cecece;
+  }
 
-table th {
-  text-align: left;
-  padding: 10px;
-  background: rgb(30 58 138);
-  color: #fff;
-}
+  table td {
+    padding: 10px;
+  }
 
-table tr:nth-child(odd) {
-  background: #cecece;
-}
+  .btnEditar {
+    background: rgb(30 58 138);
+    color: #fff;
+    border: 1px solid rgb(30 58 138);
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 7px;
+    text-decoration: none;
+    transition: all 200ms;
+  }
 
-table td {
-  padding: 10px;
-}
+  .btnEditar:hover {
+    border: 1px solidrgb(30 58 138);
+    color: rgb(30 58 138);
+    background-color: transparent;
+  }
 
-.btnEditar {
-  background: rgb(30 58 138);
-  color: #fff;
-  border: 1px solid rgb(30 58 138);
-  padding: 5px;
-  border-radius: 3px;
-  cursor: pointer;
-  margin-right: 7px;
-  text-decoration: none;
-  transition: all 200ms;
-}
+  .btnBorrar {
+    background: #ff191d;
+    color: #fff;
+    border: 1px solid #ff191d;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 200ms;
+  }
 
-.btnEditar:hover {
-  border: 1px solidrgb(30 58 138);
-  color: rgb(30 58 138);
-  background-color: transparent;
-}
+  .btnBorrar:hover {
+    border: 1px solid#ff191d;
+    color: #ff191d;
+    background-color: transparent;
+  }
 
-.btnBorrar {
-  background: #ff191d;
-  color: #fff;
-  border: 1px solid #ff191d;
-  padding: 5px;
-  border-radius: 3px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 200ms;
-}
+  .Buton1 {
+    margin-left: 10px;
+  }
 
-.btnBorrar:hover {
-  border: 1px solid#ff191d;
-  color: #ff191d;
-  background-color: transparent;
-}
+  .container {
+    position: fixed;
+    top: 85%;
+    left: 94%;
+  }
 
-.Buton1 {
-  margin-left: 10px;
-}
-.container {
-  position: fixed;
-  top: 85%;
-  left: 94%;
-}
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    transition: 0.6s;
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+  }
 
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  transition: 0.6s;
-  width: 50px;
-  height: 50px;
-  border: none;
-  outline: none;
-}
+  .btn:hover {
+    transform: scale(1.1);
+  }
 
-.btn:hover {
-  transform: scale(1.1);
-}
-.Form {
-  width: 560px;
-  align-items: center;
-  border-radius: 15px;
-  padding: 30px;
-  background-color: rgb(255, 255, 255);
-}
-.titulo {
-  text-align: center;
-  margin-bottom: 10px;
-}
+  .Form {
+    width: 560px;
+    align-items: center;
+    border-radius: 15px;
+    padding: 30px;
+    background-color: rgb(255, 255, 255);
+  }
 
-.inputs {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-}
+  .titulo {
+    text-align: center;
+    margin-bottom: 10px;
+  }
 
-.inputs label {
-  flex: 0 0 150px; /* Ancho fijo para las etiquetas */
-}
+  .inputs {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
 
-.inputs input,
-.inputs select {
-  flex: 1; /* El input y select toma el espacio restante */
-  border: 1px solid gray;
-  border-radius: 5px;
-  outline: none;
-  padding: 5px;
-}
+  .inputs label {
+    flex: 0 0 150px; /* Ancho fijo para las etiquetas */
+  }
 
-select {
-  border: 1px solid gray;
-  border-radius: 5px;
-  outline: none;
-  padding: 5px;
-  ng: 5px;
-}
+  .inputs input,
+  .inputs select {
+    flex: 1; /* El input y select toma el espacio restante */
+    border: 1px solid gray;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px;
+  }
 
-.buton1 {
+  select {
+    border: 1px solid gray;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px;
+    ng: 5px;
+  }
+
+  .buton1 {
     background: linear-gradient(to bottom right, rgb(30 58 138), rgb(23 37 84));
     width: 120px;
     padding: 6px;
@@ -364,25 +397,23 @@ select {
     color: rgb(30 58 138);
     background: none;
   }
-  .buton2{
-background:#ff191d;
-width: 120px;
-padding: 6px;
-text-decoration: none;
-text-align: center;
-color: #fff;
-border-radius: 13px;
-border: none;
-border: 1px solid #ff191d;
-cursor: pointer;
-transition: all 300ms;
-margin-right: 5px;
-
-}
-.buton2:hover{
-border: 1px solid #ff191d;
-color: #ff191d;
-background: none;
-
-}
+  .buton2 {
+    background: #ff191d;
+    width: 120px;
+    padding: 6px;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    border-radius: 13px;
+    border: none;
+    border: 1px solid #ff191d;
+    cursor: pointer;
+    transition: all 300ms;
+    margin-right: 5px;
+  }
+  .buton2:hover {
+    border: 1px solid #ff191d;
+    color: #ff191d;
+    background: none;
+  }
 </style>
