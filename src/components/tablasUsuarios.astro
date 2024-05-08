@@ -1,189 +1,184 @@
 ---
 import Butonborrcanc from "./buttons/botonesBorr-canc.astro";
+
 import { db, usuario, Roles } from "astro:db";
 import { eq } from "astro:db";
 
+// Obtener los pedidos con el nombre de la localidad
+const user = await db
+  .select()
+  .from(usuario)
+  .innerJoin(Roles, eq(usuario.rol_id, Roles.id));
 ---
-
-
-  <script type="module">
-
-
-
-    async function obtenerUsuarios() {
-      try {
-        const users = await db
-          .select()
-          .from(usuario)
-          .innerJoin(Roles, eq(usuario.rol_id, Roles.id))
-          .all();
-
-        return users;
-      } catch (error) {
-        throw new Error("Error al obtener los usuarios de la base de datos: " + error.message);
-      }
-    }
-
-    async function obtenerRoles() {
-      try {
-        const roles = await db
-          .select()
-          .from(Roles)
-          .all();
-        
-        return roles;
-      } catch (error) {
-        throw new Error("Error al obtener los roles de la base de datos: " + error.message);
-      }
-    }
-
-    async function actualizarUsuario(event) {
-      event.preventDefault();
-      
-      const form = event.target;
-      const formData = new FormData(form);
-      const userId = formData.get("id");
-
-      try {
-        const response = await fetch("./api/actualizar", {
-          method: "PUT",
-          body: formData
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al actualizar el usuario");
-        }
-
-        location.reload();
-      } catch (error) {
-        console.error("Error al actualizar el usuario:", error);
-        alert("Error al actualizar el usuario. Por favor, intenta de nuevo más tarde.");
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    // Obtener los usuarios
-    const users = await obtenerUsuarios();
-    console.log(users); // Verificar los usuarios obtenidos
-
-    // Encontrar el tbody
-    const tbody = document.querySelector("tbody");
-    console.log(tbody); // Verificar si tbody está siendo seleccionado correctamente
-
-    // Verificar si tbody existe
-    if (tbody) {
-      // Poblar la tabla con los datos de usuario
-      tbody.innerHTML = users.map(user => `
-        <tr data-user-id="${user.usuario.id}">
-          <td>${user.usuario.nombres}</td>
-          <td>${user.usuario.apellidos}</td>
-          <td>${user.usuario.user}</td>
-          <td>${user.Roles.rol_label}</td>
-          <td>
-            <button class="btnEditar" type="button">Editar</button>
-            <button type="button" class="btnBorrar">Eliminar</button>
-          </td>
-        </tr>
-      `).join("");
-    } else {
-      console.error("Error: tbody no encontrado.");
-    }
-  } catch (error) {
-    console.error("Error cargando usuarios:", error);
-    alert("Error cargando usuarios. Por favor, inténtalo de nuevo más tarde.");
-  }
-});
-
-    const editForms = document.querySelectorAll(".edit-form");
-    editForms.forEach((form) => {
-      form.addEventListener("submit", actualizarUsuario);
-    });
-
-  </script>
-
 
 <table class="table">
   <thead>
     <tr>
       <th id="nombre" style="font-weight: 600; font-size: larger;">Nombre</th>
-      <th id="apellidos" style="font-weight: 600; font-size: larger;">Apellidos</th>
+      <th id="apellidos" style="font-weight: 600; font-size: larger;"
+        >Apellidos</th
+      >
       <th id="usuario" style="font-weight: 600; font-size: larger;">Usuario</th>
       <th id="rol" style="font-weight: 600; font-size: larger;">Rol</th>
       <th style="font-weight: 600; font-size: larger;">Acciones</th>
     </tr>
   </thead>
   <tbody>
-    <!-- Use the user data here -->
-    <tr>
-      <td>Loading...</td> <!-- Placeholder for data -->
-      <td>Loading...</td> <!-- Placeholder for data -->
-      <td>Loading...</td> <!-- Placeholder for data -->
-      <td>Loading...</td> <!-- Placeholder for data -->
-      <td>Loading...</td> <!-- Placeholder for data -->
-    </tr>
+    {
+      user.map((usuarios) => (
+        <tr data-user-id="{usuario.id}">
+          <td>{usuarios.usuario.nombres}</td>
+          <td>{usuarios.usuario.apellidos}</td>
+          <td>{usuarios.usuario.user}</td>
+          <td>{usuarios.Roles.rol_label}</td>
+
+          <td>
+            <button class="btnEditar" type="button" >
+              Editar
+            </button>
+            <button type="button" class="btnBorrar">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      ))
+    }
   </tbody>
 </table>
-
-<dialog id="myModal1" class="modal items-center justify-center bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0">
-  <button type="button" id="close-dialog1" class="close-dialog fixed right-1/4 top-20 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black">
-    <svg fill="none" height="30" viewBox="0 0 20 20" width="30" xmlns="http://www.w3.org/2000/svg">
-      <path clip-rule="evenodd" d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z" fill="#fff" fill-rule="evenodd"></path>
-    </svg>
+<dialog
+  id="myModal"
+  class="modal bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
+>
+  <button
+    type="button"
+    id="close-dialog"
+    class="close-dialog fixed right-1/4 top-1/3 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
+  >
+    <!--?xml version="1.0" ?-->
+    <svg
+      fill="none"
+      height="30"
+      viewBox="0 0 20 20"
+      width="30"
+      xmlns="http://www.w3.org/2000/svg"
+      ><path
+        clip-rule="evenodd"
+        d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z"
+        fill="#fff"
+        fill-rule="evenodd"></path></svg
+    >
   </button>
 
-  <form id="myForm1" class="Form edit-form">
-    <!-- Agregar un campo oculto para el ID del usuario -->
-    <input type="hidden" name="id" id="userId" value="">
+  <form id="myForm" class="Form">
+    <h2 class="titulo">¿Quieres eliminar a este usuario?</h2>
+
+    <div class="flex mt-8 ml-28">
+      <Butonborrcanc
+        value="Borrar"
+        id="borrar"
+        value2="Cancelar"
+        id="cancelar"
+      />
+    </div>
+  </form>
+</dialog>
+
+
+
+
+
+
+
+<!--*************************************************************************************************-->
+<dialog
+  id="myModal1"
+  class="modal items-center justify-center bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
+>
+  <button
+    type="button"
+    id="close-dialog1"
+    class="close-dialog fixed right-1/4 top-20 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
+  >
+    <!--?xml version="1.0" ?-->
+    <svg
+      fill="none"
+      height="30"
+      viewBox="0 0 20 20"
+      width="30"
+      xmlns="http://www.w3.org/2000/svg"
+      ><path
+        clip-rule="evenodd"
+        d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z"
+        fill="#fff"
+        fill-rule="evenodd"></path></svg
+    >
+  </button>
+  <form id="myForm1" class="Form">
     <h1 class="titulo text-4xl">Editar usuario</h1>
     <div class="inputs">
       <label class="text-xl">Nombres:</label>
-      <input type="text" id="name1" name="nombres1" class="text-lg" autofocus />
+      <input type="text" id="name" name="nombres1" class="text-lg" autofocus />
     </div>
     <div class="inputs">
       <label class="text-xl">Apellidos:</label>
-      <input type="text" id="lastname1" name="apellidos1" class="text-lg" autofocus />
+      <input
+        type="text"
+        id="lastname"
+        name="apellidos1"
+        class="text-lg"
+        autofocus
+        
+      />
     </div>
     <div class="inputs">
       <label class="text-xl">Usuario:</label>
-      <input type="text" id="user1" name="usuario1" class="text-lg" autofocus />
+      <input type="text" id="user" name="usuario1" class="text-lg" autofocus />
     </div>
     <div class="inputs">
       <label for="password" class="text-xl">Contraseña:</label>
-      <input type="password" id="password1" name="contraseña1" class="text-lg" autofocus />
+      <input
+        type="password"
+        id="password"
+        name="contraseña1"
+        class="text-lg"
+        autofocus
+      />
     </div>
     <div class="inputs">
-      <label for="rol" class="text-xl">Rol:</label>
-      <select id="rol" name="rol1" class="text-lg" autofocus>
-        <!-- Los roles serán agregados aquí dinámicamente -->
-      </select>
+      <label for="password" class="text-xl">Rol:</label>
+      <input
+        type="text"
+        id="password"
+        name="contraseña1"
+        class="text-lg"
+        autofocus
+      />
     </div>
+
     <div class="mt-4">
       <button class="buton1" type="submit">Guardar</button>
-      <button class="buton2" type="button">Cancelar</button>
+      <button class="buton2" type="submit">Cancelar</button>
     </div>
+    
+      
+    
   </form>
 </dialog>
 
-<dialog id="myModal" class="modal bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0">
-  <button type="button" id="close-dialog" class="close-dialog fixed right-1/4 top-1/3 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black">
-    <svg fill="none" height="30" viewBox="0 0 20 20" width="30" xmlns="http://www.w3.org/2000/svg">
-      <path clip-rule="evenodd" d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z" fill="#fff" fill-rule="evenodd"></path>
-    </svg>
-  </button>
-  <form id="myForm" class="Form">
-    <h2 class="titulo">¿Quieres eliminar a este usuario?</h2>
-    <div class="flex mt-8 ml-28">
-      <Butonborrcanc value="Borrar" id="borrar" value2="Cancelar" id="cancelar" />
-    </div>
-  </form>
-</dialog>
 
 <script>
-  const openModalBtns4 = document.querySelectorAll(".btnEditar");
-  const myModal4 = document.getElementById("myModal1") as HTMLDialogElement;
-  const myForm4 = document.getElementById("myForm1");
-  const closeButton4 = document.getElementById("close-dialog1");
+
+const openModalBtns4: NodeListOf<HTMLButtonElement> | null =
+    document.querySelectorAll(".btnEditar");
+  const myModal4: HTMLDialogElement | null = document.getElementById(
+    "myModal1",
+  ) as HTMLDialogElement;
+  const myForm4: HTMLFormElement | null = document.getElementById(
+    "myForm1",
+  ) as HTMLFormElement;
+  const closeButton4: HTMLButtonElement | null = document.getElementById(
+    "close-dialog1",
+  ) as HTMLButtonElement;
 
   if (openModalBtns4 && myModal4 && myForm4 && closeButton4) {
     openModalBtns4.forEach((btn) => {
@@ -196,12 +191,14 @@ import { eq } from "astro:db";
       myModal4.close();
     });
 
+    // Cerrar el modal cuando se hace clic fuera de él
     myModal4.addEventListener("click", (event) => {
       if (event.target === myModal4) {
         myModal4.close();
       }
     });
 
+    // Cerrar el modal cuando se presiona la tecla Esc
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && myModal4.open) {
         myModal4.close();
@@ -209,10 +206,22 @@ import { eq } from "astro:db";
     });
   }
 
-  const openModalBtns1 = document.querySelectorAll(".btnBorrar");
-  const myModal = document.getElementById("myModal") as HTMLDialogElement;
-  const myForm = document.getElementById("myForm");
-  const closeButton = document.getElementById("close-dialog");
+
+
+
+
+  // TypeScript
+  const openModalBtns1: NodeListOf<HTMLButtonElement> | null =
+    document.querySelectorAll(".btnBorrar");
+  const myModal: HTMLDialogElement | null = document.getElementById(
+    "myModal",
+  ) as HTMLDialogElement;
+  const myForm: HTMLFormElement | null = document.getElementById(
+    "myForm",
+  ) as HTMLFormElement;
+  const closeButton: HTMLButtonElement | null = document.getElementById(
+    "close-dialog",
+  ) as HTMLButtonElement;
 
   if (openModalBtns1 && myModal && myForm && closeButton) {
     openModalBtns1.forEach((btn) => {
@@ -225,12 +234,14 @@ import { eq } from "astro:db";
       myModal.close();
     });
 
+    // Cerrar el modal cuando se hace clic fuera de él
     myModal.addEventListener("click", (event) => {
       if (event.target === myModal) {
         myModal.close();
       }
     });
 
+    // Cerrar el modal cuando se presiona la tecla Esc
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && myModal.open) {
         myModal.close();
@@ -315,7 +326,6 @@ import { eq } from "astro:db";
   .Buton1 {
     margin-left: 10px;
   }
-
   .container {
     position: fixed;
     top: 85%;
@@ -337,7 +347,6 @@ import { eq } from "astro:db";
   .btn:hover {
     transform: scale(1.1);
   }
-
   .Form {
     width: 560px;
     align-items: center;
@@ -345,7 +354,6 @@ import { eq } from "astro:db";
     padding: 30px;
     background-color: rgb(255, 255, 255);
   }
-
   .titulo {
     text-align: center;
     margin-bottom: 10px;
@@ -379,41 +387,43 @@ import { eq } from "astro:db";
   }
 
   .buton1 {
-    background: linear-gradient(to bottom right, rgb(30 58 138), rgb(23 37 84));
-    width: 120px;
-    padding: 6px;
-    text-decoration: none;
-    text-align: center;
-    color: #fff;
-    border-radius: 13px;
-    border: none;
-    border: 1px solid rgb(30 58 138);
-    cursor: pointer;
-    transition: all 300ms;
-    margin-left: 130px;
-  }
-  .buton1:hover {
-    border: 1px solid rgb(30 58 138);
-    color: rgb(30 58 138);
-    background: none;
-  }
-  .buton2 {
-    background: #ff191d;
-    width: 120px;
-    padding: 6px;
-    text-decoration: none;
-    text-align: center;
-    color: #fff;
-    border-radius: 13px;
-    border: none;
-    border: 1px solid #ff191d;
-    cursor: pointer;
-    transition: all 300ms;
-    margin-right: 5px;
-  }
-  .buton2:hover {
-    border: 1px solid #ff191d;
-    color: #ff191d;
-    background: none;
-  }
+      background: linear-gradient(to bottom right, rgb(30 58 138), rgb(23 37 84));
+      width: 120px;
+      padding: 6px;
+      text-decoration: none;
+      text-align: center;
+      color: #fff;
+      border-radius: 13px;
+      border: none;
+      border: 1px solid rgb(30 58 138);
+      cursor: pointer;
+      transition: all 300ms;
+      margin-left: 130px;
+    }
+    .buton1:hover {
+      border: 1px solid rgb(30 58 138);
+      color: rgb(30 58 138);
+      background: none;
+    }
+    .buton2{
+  background:#ff191d;
+  width: 120px;
+  padding: 6px;
+  text-decoration: none;
+  text-align: center;
+  color: #fff;
+  border-radius: 13px;
+  border: none;
+  border: 1px solid #ff191d;
+  cursor: pointer;
+  transition: all 300ms;
+ margin-right: 5px;
+  
+}
+.buton2:hover{
+  border: 1px solid #ff191d;
+  color: #ff191d;
+  background: none;
+  
+}
 </style>
