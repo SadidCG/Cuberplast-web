@@ -1,8 +1,10 @@
 ---
-import Butonborrcanc from "./buttons/botonesBorr-canc.astro";
+
+import BotonEditar from "./buttons/botonEditar.astro";
 
 import { db, usuario, Roles } from "astro:db";
 import { eq } from "astro:db";
+import BotonBorrar from "./buttons/botonBorrar.astro";
 
 // Obtener los pedidos con el nombre de la localidad
 const user = await db
@@ -33,55 +35,15 @@ const user = await db
           <td>{usuarios.Roles.rol_label}</td>
 
           <td>
-            <button class="btnEditar" type="button" >
-              Editar
-            </button>
-            <button type="button" class="btnBorrar">
-              Eliminar
-            </button>
+            <BotonEditar/>
+            <BotonBorrar/>
           </td>
         </tr>
       ))
     }
   </tbody>
 </table>
-<dialog
-  id="myModal"
-  class="modal bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
->
-  <button
-    type="button"
-    id="close-dialog"
-    class="close-dialog fixed right-1/4 top-1/3 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
-  >
-    <!--?xml version="1.0" ?-->
-    <svg
-      fill="none"
-      height="30"
-      viewBox="0 0 20 20"
-      width="30"
-      xmlns="http://www.w3.org/2000/svg"
-      ><path
-        clip-rule="evenodd"
-        d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z"
-        fill="#fff"
-        fill-rule="evenodd"></path></svg
-    >
-  </button>
 
-  <form id="myForm" class="Form">
-    <h2 class="titulo">¿Quieres eliminar a este usuario?</h2>
-
-    <div class="flex mt-8 ml-28">
-      <Butonborrcanc
-        value="Borrar"
-        id="borrar"
-        value2="Cancelar"
-        id="cancelar"
-      />
-    </div>
-  </form>
-</dialog>
 
 
 
@@ -90,166 +52,7 @@ const user = await db
 
 
 <!--*************************************************************************************************-->
-<dialog
-  id="myModal1"
-  class="modal items-center justify-center bg-transparent px-4 text-2xl backdrop:bg-black/20 backdrop:backdrop-blur-sm sm:px-0"
->
-  <button
-    type="button"
-    id="close-dialog1"
-    class="close-dialog fixed right-1/4 top-20 rounded p-4 transition hover:scale-110 hover:bg-accent hover:text-black"
-  >
-    <!--?xml version="1.0" ?-->
-    <svg
-      fill="none"
-      height="30"
-      viewBox="0 0 20 20"
-      width="30"
-      xmlns="http://www.w3.org/2000/svg"
-      ><path
-        clip-rule="evenodd"
-        d="M5.17157 8.00003L0.585785 3.41424L3.41421 0.585815L8 5.1716L12.5858 0.585815L15.4142 3.41424L10.8284 8.00003L15.4142 12.5858L12.5858 15.4142L8 10.8285L3.41421 15.4142L0.585785 12.5858L5.17157 8.00003Z"
-        fill="#fff"
-        fill-rule="evenodd"></path></svg
-    >
-  </button>
-  <form id="myForm1" class="Form">
-    <h1 class="titulo text-4xl">Editar usuario</h1>
-    <div class="inputs">
-      <label class="text-xl">Nombres:</label>
-      <input type="text" id="name" name="nombres1" class="text-lg" autofocus />
-    </div>
-    <div class="inputs">
-      <label class="text-xl">Apellidos:</label>
-      <input
-        type="text"
-        id="lastname"
-        name="apellidos1"
-        class="text-lg"
-        autofocus
-        
-      />
-    </div>
-    <div class="inputs">
-      <label class="text-xl">Usuario:</label>
-      <input type="text" id="user" name="usuario1" class="text-lg" autofocus />
-    </div>
-    <div class="inputs">
-      <label for="password" class="text-xl">Contraseña:</label>
-      <input
-        type="password"
-        id="password"
-        name="contraseña1"
-        class="text-lg"
-        autofocus
-      />
-    </div>
-    <div class="inputs">
-      <label for="password" class="text-xl">Rol:</label>
-      <input
-        type="text"
-        id="password"
-        name="contraseña1"
-        class="text-lg"
-        autofocus
-      />
-    </div>
 
-    <div class="mt-4">
-      <button class="buton1" type="submit">Guardar</button>
-      <button class="buton2" type="submit">Cancelar</button>
-    </div>
-    
-      
-    
-  </form>
-</dialog>
-
-
-<script>
-
-const openModalBtns4: NodeListOf<HTMLButtonElement> | null =
-    document.querySelectorAll(".btnEditar");
-  const myModal4: HTMLDialogElement | null = document.getElementById(
-    "myModal1",
-  ) as HTMLDialogElement;
-  const myForm4: HTMLFormElement | null = document.getElementById(
-    "myForm1",
-  ) as HTMLFormElement;
-  const closeButton4: HTMLButtonElement | null = document.getElementById(
-    "close-dialog1",
-  ) as HTMLButtonElement;
-
-  if (openModalBtns4 && myModal4 && myForm4 && closeButton4) {
-    openModalBtns4.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        myModal4.showModal();
-      });
-    });
-
-    closeButton4.addEventListener("click", () => {
-      myModal4.close();
-    });
-
-    // Cerrar el modal cuando se hace clic fuera de él
-    myModal4.addEventListener("click", (event) => {
-      if (event.target === myModal4) {
-        myModal4.close();
-      }
-    });
-
-    // Cerrar el modal cuando se presiona la tecla Esc
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && myModal4.open) {
-        myModal4.close();
-      }
-    });
-  }
-
-
-
-
-
-  // TypeScript
-  const openModalBtns1: NodeListOf<HTMLButtonElement> | null =
-    document.querySelectorAll(".btnBorrar");
-  const myModal: HTMLDialogElement | null = document.getElementById(
-    "myModal",
-  ) as HTMLDialogElement;
-  const myForm: HTMLFormElement | null = document.getElementById(
-    "myForm",
-  ) as HTMLFormElement;
-  const closeButton: HTMLButtonElement | null = document.getElementById(
-    "close-dialog",
-  ) as HTMLButtonElement;
-
-  if (openModalBtns1 && myModal && myForm && closeButton) {
-    openModalBtns1.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        myModal.showModal();
-      });
-    });
-
-    closeButton.addEventListener("click", () => {
-      myModal.close();
-    });
-
-    // Cerrar el modal cuando se hace clic fuera de él
-    myModal.addEventListener("click", (event) => {
-      if (event.target === myModal) {
-        myModal.close();
-      }
-    });
-
-    // Cerrar el modal cuando se presiona la tecla Esc
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && myModal.open) {
-        myModal.close();
-      }
-    });
-  }
-
-</script>
 <style>
   .Form {
     width: 560px;
@@ -288,142 +91,5 @@ const openModalBtns4: NodeListOf<HTMLButtonElement> | null =
     padding: 10px;
   }
 
-  .btnEditar {
-    background: rgb(30 58 138);
-    color: #fff;
-    border: 1px solid rgb(30 58 138);
-    padding: 5px;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-right: 7px;
-    text-decoration: none;
-    transition: all 200ms;
-  }
-
-  .btnEditar:hover {
-    border: 1px solidrgb(30 58 138);
-    color: rgb(30 58 138);
-    background-color: transparent;
-  }
-
-  .btnBorrar {
-    background: #ff191d;
-    color: #fff;
-    border: 1px solid #ff191d;
-    padding: 5px;
-    border-radius: 3px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 200ms;
-  }
-
-  .btnBorrar:hover {
-    border: 1px solid#ff191d;
-    color: #ff191d;
-    background-color: transparent;
-  }
-
-  .Buton1 {
-    margin-left: 10px;
-  }
-  .container {
-    position: fixed;
-    top: 85%;
-    left: 94%;
-  }
-
-  .btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    transition: 0.6s;
-    width: 50px;
-    height: 50px;
-    border: none;
-    outline: none;
-  }
-
-  .btn:hover {
-    transform: scale(1.1);
-  }
-  .Form {
-    width: 560px;
-    align-items: center;
-    border-radius: 15px;
-    padding: 30px;
-    background-color: rgb(255, 255, 255);
-  }
-  .titulo {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-
-  .inputs {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-  }
-
-  .inputs label {
-    flex: 0 0 150px; /* Ancho fijo para las etiquetas */
-  }
-
-  .inputs input,
-  .inputs select {
-    flex: 1; /* El input y select toma el espacio restante */
-    border: 1px solid gray;
-    border-radius: 5px;
-    outline: none;
-    padding: 5px;
-  }
-
-  select {
-    border: 1px solid gray;
-    border-radius: 5px;
-    outline: none;
-    padding: 5px;
-    ng: 5px;
-  }
-
-  .buton1 {
-      background: linear-gradient(to bottom right, rgb(30 58 138), rgb(23 37 84));
-      width: 120px;
-      padding: 6px;
-      text-decoration: none;
-      text-align: center;
-      color: #fff;
-      border-radius: 13px;
-      border: none;
-      border: 1px solid rgb(30 58 138);
-      cursor: pointer;
-      transition: all 300ms;
-      margin-left: 130px;
-    }
-    .buton1:hover {
-      border: 1px solid rgb(30 58 138);
-      color: rgb(30 58 138);
-      background: none;
-    }
-    .buton2{
-  background:#ff191d;
-  width: 120px;
-  padding: 6px;
-  text-decoration: none;
-  text-align: center;
-  color: #fff;
-  border-radius: 13px;
-  border: none;
-  border: 1px solid #ff191d;
-  cursor: pointer;
-  transition: all 300ms;
- margin-right: 5px;
   
-}
-.buton2:hover{
-  border: 1px solid #ff191d;
-  color: #ff191d;
-  background: none;
-  
-}
 </style>

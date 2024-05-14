@@ -1,6 +1,6 @@
 // importa los módulos necesarios
 import { Argon2id } from "oslo/password";
-import { db, usuario, Roles } from "astro:db"; // Aquí estás importando "usuario" pero podría ser que no esté definido
+import { db, usuario } from "astro:db"; // Aquí estás importando "usuario" pero podría ser que no esté definido
 import type { APIContext } from "astro";
 
 // función para generar la respuesta
