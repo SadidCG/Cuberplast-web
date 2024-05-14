@@ -2,6 +2,7 @@ import Chart from 'chart.js/auto';
 
 const ctx = document.getElementById('myChart').getContext('2d');
 
+<<<<<<< HEAD
 // Contadores de localidades
 let localidadCounters = {
     'RedAntonio Nariño': 0,
@@ -33,12 +34,25 @@ const data = {
     data: Object.values(localidadCounters),
     backgroundColor: 'rgb(14, 210, 245, 0.4)',
     borderColor: 'rgb(14, 210, 245)',
+=======
+const data = {
+  labels: ['RedAntonio Nariño', 'BlueBarrios Unidos',
+   'Bosa', 'Chapinero', 'Ciudad Bolívar', 'Engativá','Fontibón','Kennedy',
+   'La Candelaria', 'Los Mártires','Puente Aranda','Rafael Uribe Uribe','San Cristobal','Santa Fe','Suba','Sumapaz',
+   'Teusaqullo','Tunjuelito','Usaquén','Usme'],
+  datasets: [{
+    label: 'Más ventas',
+    data: [100, 19, 39, 50, 25, 37,30, 50,70,17,80,45,56,67,43,78,96,56,67,43,],
+    backgroundColor: ['rgb(14, 210, 245, 0.4)'],
+    borderColor: ['rgb(14, 210, 245)'],
+>>>>>>> 13281546d65ff49a7431fe60388de9c0de3ae225
     borderWidth: 1
   }]
 };
 
 const chart = new Chart(ctx, {
   type: 'bar',
+<<<<<<< HEAD
   data: data
 });
 
@@ -66,4 +80,17 @@ form.addEventListener('submit', async function(event) {
     updateChart();
     
     // Aquí iría el código para enviar los datos del formulario a través de la API
+=======
+  data: data,
+  options: {
+    onClick: (e) => {
+      const canvasPosition = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false)[0];
+      if (canvasPosition) {
+        const dataX = chart.data.labels[canvasPosition.index];
+        const dataY = chart.data.datasets[canvasPosition.datasetIndex].data[canvasPosition.index];
+        console.log(dataX, dataY);
+      }
+    }
+  }
+>>>>>>> 13281546d65ff49a7431fe60388de9c0de3ae225
 });

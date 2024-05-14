@@ -40,7 +40,11 @@ const Pedidos = defineTable ({
         destino: column.text(),
         direccion: column.text(),
         localidad_id: column.number({ references: () => localidades.columns.id }),
+<<<<<<< HEAD
         fecha: column.date({ optional: true, default:NOW})
+=======
+        fecha: column.date({ optional: true})
+>>>>>>> 13281546d65ff49a7431fe60388de9c0de3ae225
     }
 });
 
