@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // importa los módulos necesarios
 import { Argon2id } from "oslo/password";
 import { db, usuario } from "astro:db"; // Aquí estás importando "usuario" pero podría ser que no esté definido
@@ -62,11 +62,4 @@ export async function PUT(context: APIContext): Promise<Response> {
         return await generateResponse("Error interno del servidor", 500);
     }
 }
-=======
-import { db, usuario, eq } from "astro:db";
 
-
-await db.update(usuario)
-  .set({ nombres: '', apellidos:  'John', user:'', contraseña: '', rol_id:1 })
-  .where(eq(usuario.nombres, 'Dan'));
->>>>>>> 13281546d65ff49a7431fe60388de9c0de3ae225
