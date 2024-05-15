@@ -20,38 +20,7 @@ export default async function () {
 
 
   ]);
-  await db.insert(usuario).values([{
-    nombres: 'Juanito',
-    apellidos: 'Pérez',
-    user: 'juanito',
-    contraseña: '<PASSWORD>',
-    rol_id: 2
-  },
-  {
-    nombres: 'María',
-    apellidos: 'Gómez',
-    user: 'maria',
-    contraseña: 'password',
-    rol_id: 2
-  },
-  {
-    nombres: 'Lesley Sadid',
-    apellidos: 'Camargo Gutierrez',
-    user: 'Lesley1',
-    contraseña: 'camargo19',
-    rol_id: 1
-  },
-  {
-    nombres: 'Maríaadad',
-    apellidos: 'Gómez',
-    user: 'maria123',
-    contraseña: 'password',
-    rol_id: 2
-  }
-
-
-
-  ]);
+ 
 
   await db.insert(localidades).values([{
     id:1,

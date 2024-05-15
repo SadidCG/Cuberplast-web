@@ -1,14 +1,11 @@
 {
-
-
-
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "jsx": "preserve",
-    "jsxImportSource": "preact",
-    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "baseUrl": "C:/Users/PracticanteSw/Downloads/Cuberplast-web-main",
     "paths": {
-      "@/*":[
+      "@/*": [
         "./src/*"
       ]
     }

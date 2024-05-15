@@ -16,12 +16,15 @@ const user = await db
 <table class="table">
   <thead>
     <tr>
+      <th id="id" style="font-weight: 600; font-size: larger;">id</th>
       <th id="nombre" style="font-weight: 600; font-size: larger;">Nombre</th>
       <th id="apellidos" style="font-weight: 600; font-size: larger;"
         >Apellidos</th
       >
       <th id="usuario" style="font-weight: 600; font-size: larger;">Usuario</th>
       <th id="rol" style="font-weight: 600; font-size: larger;">Rol</th>
+      <th id="fecha" style="font-weight: 600; font-size: larger;">Fecha</th>
+
       <th style="font-weight: 600; font-size: larger;">Acciones</th>
     </tr>
   </thead>
@@ -29,14 +32,23 @@ const user = await db
     {
       user.map((usuarios) => (
         <tr data-user-id="{usuario.id}">
+          <td>{usuarios.usuario.id}</td>
           <td>{usuarios.usuario.nombres}</td>
           <td>{usuarios.usuario.apellidos}</td>
           <td>{usuarios.usuario.user}</td>
           <td>{usuarios.Roles.rol_label}</td>
+          <td><time datetime={usuarios.usuario.fecha_creacion.toISOString()}>
+          {usuarios.usuario.fecha_creacion.toLocaleDateString("es-CO",{
+           year:'numeric',
+           month:'short',
+           day:'numeric'
+
+          })}</time></td>
+
 
           <td>
             <BotonEditar/>
-            <BotonBorrar/>
+            <BotonBorrar />
           </td>
         </tr>
       ))
@@ -51,7 +63,7 @@ const user = await db
 
 
 
-<!--*************************************************************************************************-->
+
 
 <style>
   .Form {

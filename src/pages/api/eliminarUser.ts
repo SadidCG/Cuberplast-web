@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { usuario, db, eq } from "astro:db";
+import { usuario, db, eq  } from "astro:db";
 
 export const DELETE: APIRoute = async ({ url }) => {
     const id = Number(url.searchParams.get('id'));
@@ -33,7 +33,7 @@ export const DELETE: APIRoute = async ({ url }) => {
                 success: false,
             }),
             {
-                status: 500,
+                status: 404,
             },
         );
     }

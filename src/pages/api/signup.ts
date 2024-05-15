@@ -50,7 +50,7 @@ export async function POST(context: APIContext): Promise<Response> {
             rol_id: rolId
         }).run();
 
-        console.log(nombres1, apellidos1, usuario1, contraseña1, rolId);
+        console.log(userId,nombres1, apellidos1, usuario1, contraseña1, rolId);
 
         // Redireccionar al usuario a la página de usuarios.astro
         return new Response(null, { status: 303, headers: { "Location": "/usuarios" } });
