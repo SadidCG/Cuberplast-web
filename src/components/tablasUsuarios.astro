@@ -1,12 +1,26 @@
 ---
-
+// Importa los componentes necesarios
 import BotonEditar from "./buttons/botonEditar.astro";
-
+import BotonBorrar from "./buttons/botonBorrar.astro";
 import { db, usuario, Roles } from "astro:db";
 import { eq } from "astro:db";
-import BotonBorrar from "./buttons/botonBorrar.astro";
 
-// Obtener los pedidos con el nombre de la localidad
+// Función para eliminar un usuario
+async function eliminarUsuario(userId: string) {
+  // Realiza la eliminación del usuario en la base de datos
+  await db.delete(usuario).where(eq(usuario.id, userId));
+}
+
+// Manejador de eventos para el botón de eliminar
+const handleEliminarUsuario = (event: MouseEvent) => {
+  const target = event.target as HTMLButtonElement;
+  const userId = target.closest("tr")?.dataset.userId;
+  if (userId) {
+    eliminarUsuario(userId);
+  }
+}
+
+
 const user = await db
   .select()
   .from(usuario)
@@ -18,44 +32,37 @@ const user = await db
     <tr>
       <th id="id" style="font-weight: 600; font-size: larger;">id</th>
       <th id="nombre" style="font-weight: 600; font-size: larger;">Nombre</th>
-      <th id="apellidos" style="font-weight: 600; font-size: larger;"
-        >Apellidos</th
-      >
+      <th id="apellidos" style="font-weight: 600; font-size: larger;">Apellidos</th>
       <th id="usuario" style="font-weight: 600; font-size: larger;">Usuario</th>
       <th id="rol" style="font-weight: 600; font-size: larger;">Rol</th>
       <th id="fecha" style="font-weight: 600; font-size: larger;">Fecha</th>
-
       <th style="font-weight: 600; font-size: larger;">Acciones</th>
     </tr>
   </thead>
   <tbody>
     {
       user.map((usuarios) => (
-        <tr data-user-id="{usuario.id}">
+        <tr data-user-id={usuarios.usuario.id}>
           <td>{usuarios.usuario.id}</td>
           <td>{usuarios.usuario.nombres}</td>
           <td>{usuarios.usuario.apellidos}</td>
           <td>{usuarios.usuario.user}</td>
           <td>{usuarios.Roles.rol_label}</td>
           <td><time datetime={usuarios.usuario.fecha_creacion.toISOString()}>
-          {usuarios.usuario.fecha_creacion.toLocaleDateString("es-CO",{
-           year:'numeric',
-           month:'short',
-           day:'numeric'
-
-          })}</time></td>
-
-
+            {usuarios.usuario.fecha_creacion.toLocaleDateString("es-CO",{
+              year:'numeric',
+              month:'short',
+              day:'numeric'
+            })}
+          </time></td>
           <td>
-            <BotonEditar/>
-            <BotonBorrar />
+            <button type="button" class="btnBorrar" onclick={handleEliminarUsuario}> Eliminar </button>
           </td>
         </tr>
       ))
     }
   </tbody>
 </table>
-
 
 
 
