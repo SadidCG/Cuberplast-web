@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { usuario, db, eq  } from "astro:db";
 
-export const DELETE: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url }) => {
     const id = Number(url.searchParams.get('id'));
 
     if (!id) {

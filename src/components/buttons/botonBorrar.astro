@@ -25,11 +25,10 @@
         </svg>
     </button>
 
-    <form id="myForm" class="Form" method="" action="./api/eliminarUser">
+    <form id="myForm" class="Form" method="post" action="./api/eliminarUser">
         <h2 class="titulo">¿Quieres eliminar a este usuario?</h2>
         
-        <!-- Add this hidden input to store the user ID -->
-        <input type="hidden" id="userId" name="userId" value="12345"> <!-- Change the value accordingly -->
+<!-- Change the value accordingly -->
 
         <div class="flex mt-8 ml-28">
             <button class="buton" type="submit" id="borrar">Borrar</button>
@@ -41,7 +40,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    const userIdInput = document.getElementById("userId") as HTMLInputElement;
+    
     const openModalBtns1 = document.querySelectorAll<HTMLButtonElement>(".btnBorrar");
     const myModal = document.getElementById("myModal") as HTMLDialogElement;
     const myForm = document.getElementById("myForm") as HTMLFormElement;
@@ -72,29 +71,7 @@
             }
         });
 
-        myForm.addEventListener("submit", async (event: Event) => {
-            event.preventDefault();
-            if (userIdInput) {
-                const userId = userIdInput.value;
-                if (userId) {
-                    try {
-                        const response = await fetch(`/api/eliminarUser?id=${userId}`, {
-                            method: 'DELETE',
-                        });
-
-                        if (response.ok) {
-                            alert('Usuario eliminado correctamente.');
-                            myModal.close();
-                        } else {
-                            alert('No se pudo eliminar el usuario.');
-                        }
-                    } catch (error) {
-                        console.error('Error al eliminar el usuario:', error);
-                        alert('Error al eliminar el usuario.');
-                    }
-                }
-            }
-        });
+       
 
         const cancelButton = document.getElementById("cancelar") as HTMLButtonElement;
         if (cancelButton) {
@@ -103,6 +80,7 @@
             });
         }
     }
+    
 });
 
 </script>

@@ -5,13 +5,13 @@ import BotonBorrar from "./buttons/botonBorrar.astro";
 import { db, usuario, Roles } from "astro:db";
 import { eq } from "astro:db";
 
-// Función para eliminar un usuario
+
 async function eliminarUsuario(userId: string) {
   // Realiza la eliminación del usuario en la base de datos
   await db.delete(usuario).where(eq(usuario.id, userId));
 }
 
-// Manejador de eventos para el botón de eliminar
+
 const handleEliminarUsuario = (event: MouseEvent) => {
   const target = event.target as HTMLButtonElement;
   const userId = target.closest("tr")?.dataset.userId;
@@ -56,7 +56,8 @@ const user = await db
             })}
           </time></td>
           <td>
-            <button type="button" class="btnBorrar" onclick={handleEliminarUsuario}> Eliminar </button>
+            <BotonEditar/>
+           <BotonBorrar/>
           </td>
         </tr>
       ))

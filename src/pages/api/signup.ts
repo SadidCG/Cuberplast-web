@@ -56,6 +56,6 @@ export async function POST(context: APIContext): Promise<Response> {
         return new Response(null, { status: 303, headers: { "Location": "/usuarios" } });
     } catch (error) {
         console.error("Error al procesar el formulario:", error);
-        return await generateResponse("Error interno del servidor", 500);
+        return await generateResponse("El nombre de usuario en uso", 500);
     }
 }
