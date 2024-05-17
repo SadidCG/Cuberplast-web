@@ -6,21 +6,6 @@ import { db, usuario, Roles } from "astro:db";
 import { eq } from "astro:db";
 
 
-async function eliminarUsuario(userId: string) {
-  // Realiza la eliminación del usuario en la base de datos
-  await db.delete(usuario).where(eq(usuario.id, userId));
-}
-
-
-const handleEliminarUsuario = (event: MouseEvent) => {
-  const target = event.target as HTMLButtonElement;
-  const userId = target.closest("tr")?.dataset.userId;
-  if (userId) {
-    eliminarUsuario(userId);
-  }
-}
-
-
 const user = await db
   .select()
   .from(usuario)

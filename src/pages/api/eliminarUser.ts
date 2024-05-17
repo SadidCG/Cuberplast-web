@@ -1,40 +1,15 @@
-import type { APIRoute } from "astro";
-import { usuario, db, eq  } from "astro:db";
+import { IncomingMessage, ServerResponse } from 'http';
+import { db, usuario } from "astro:db";
+import { eq } from "astro:db";
 
-export const GET: APIRoute = async ({ url }) => {
-    const id = Number(url.searchParams.get('id'));
+export async function GET({ request }: { request: IncomingMessage, response: ServerResponse }) {
+  const url = new URL(request.url || '', `http://${request.headers.host}`);
+  const userId = url.searchParams.get('id');
 
-    if (!id) {
-        return new Response(
-            JSON.stringify({
-                message: "Please provide all required fields.",
-                success: false,
-            }),
-            {
-                status: 404,
-            },
-        );
-    }
-
-    try {
-        const res = await db.delete(usuario).where(eq(usuario.id, id));
-        if (res) {
-            return new Response(null, { status: 204 });
-        } else {
-            throw new Error("User not found or could not be deleted");
-        }
-    } catch (e) {
-        console.error(e);
-        
-        const errorMessage = e instanceof Error ? e.message : "Internal Server Error";
-        return new Response(
-            JSON.stringify({
-                message: errorMessage,
-                success: false,
-            }),
-            {
-                status: 404,
-            },
-        );
-    }
-};
+  if (userId) {
+    await db.delete(usuario).where(eq(usuario.id, userId)).run();
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } else {
+    return new Response(JSON.stringify({ success: false, error: "User ID is required" }), { status: 400 });
+  }
+}
