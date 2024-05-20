@@ -1,15 +1,26 @@
-import { IncomingMessage, ServerResponse } from 'http';
-import { db, usuario } from "astro:db";
-import { eq } from "astro:db";
+import type { APIRoute } from 'astro';
+import { db, eq } from 'astro:db';
+import { usuario } from 'astro:db';
 
-export async function GET({ request }: { request: IncomingMessage, response: ServerResponse }) {
-  const url = new URL(request.url || '', `http://${request.headers.host}`);
-  const userId = url.searchParams.get('id');
+export const DELETE: APIRoute = async ({ request }) => {
+  try {
+    const { id } = await request.json();
 
-  if (userId) {
-    await db.delete(usuario).where(eq(usuario.id, userId)).run();
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
-  } else {
-    return new Response(JSON.stringify({ success: false, error: "User ID is required" }), { status: 400 });
+    // Lógica para eliminar el usuario utilizando Drezzle
+    if (typeof id === 'string') {
+      await db.delete(usuario).where(eq(usuario.id, id));
+    } else {
+      throw new Error('Invalid id');
+    }
+
+    return new Response(JSON.stringify({ message: 'User deleted successfully!' }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    console.error('Error in DELETE route:', error);
+    return new Response(JSON.stringify({ message: 'Failed to delete user' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-}
+};
